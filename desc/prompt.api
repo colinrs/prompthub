@@ -1,0 +1,32 @@
+syntax = "v1"
+
+@server (
+	group:  prompt
+	prefix: /api/v1
+)
+service prompthub-api {
+	@handler createPrompt
+	post /prompt/create (CreatePromptRequest)
+
+	@handler updatePrompt
+	put /prompt/update (UpdatePromptRequest)
+
+	@handler deletePrompt
+	delete /prompt/delete (DeletePromptRequest)
+}
+
+type CreatePromptRequest {
+	PromptName string `json:"prompt_name" validate:"max=50"`
+	Content    string `json:"content" validate:"max=10240"`
+}
+
+type UpdatePromptRequest {
+	PromptID   uint   `json:"prompt_id" validate:"omitempty,min=1"`
+	PromptName string `json:"prompt_name" validate:"max=50"`
+	Content    string `json:"content" validate:"max=10240"`
+}
+
+type DeletePromptRequest {
+	PromptID uint `json:"prompt_id" validate:"omitempty,min=1"`
+}
+

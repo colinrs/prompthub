@@ -1,0 +1,16 @@
+syntax = "v1"
+
+@server (
+	group:  category
+	prefix: /api/v1
+)
+service prompthub-api {
+	// Create user information | 创建用户
+	@handler createCategory
+	post /category/create (CreateCategoryRequest)
+}
+
+type CreateCategoryRequest {
+	CategoryName string `json:"username" validate:"omitempty,max=50"`
+}
+

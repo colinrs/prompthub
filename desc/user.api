@@ -1,0 +1,111 @@
+syntax = "v1"
+
+@server (
+	group:  user
+	prefix: /api/v1
+)
+service prompthub-api {
+	// Create user information | 创建用户
+	@handler createUser
+	post /user/create (CreateUserRequest)
+
+	// Update user information | 更新用户
+	@handler updateUser
+	put /user/update (UpdateUserRequest)
+
+	// Change Password | 修改密码
+	@handler changePassword
+	put /user/change_password (ChangePasswordRequest)
+
+	// Log in | 登录
+	@handler login
+	post /user/login (LoginRequest) returns (LoginResponse)
+
+	// Log out | 退出登陆
+	@handler logout
+	get /user/logout
+
+	// Refresh token | 获取刷新 token
+	@handler refreshToken
+	get /user/refresh_token returns (RefreshTokenResponse)
+}
+
+type CreateUserRequest {
+	// Status |  Status 1: normal 2: ban | 状态 1 正常 2 禁用
+	Status uint32 `json:"status,options=1|2" validate:"omitempty,lt=3"`
+	// Username | 用户名
+	Username string `json:"username" validate:"omitempty,max=50"`
+	// Password | 密码
+	Password string `json:"password" validate:"min=6"`
+	// Description | 描述
+	Description string `json:"description,optional" validate:"omitempty,max=100"`
+	// Mobile | 手机号
+	Mobile string `json:"mobile" validate:"max=18"`
+	// Email | 邮箱
+	Email string `json:"email" validate:"email,max=80"`
+}
+
+type UpdateUserRequest {
+	UserID uint `json:"user_id" validate:"omitempty,min=1"`
+	// Status |  Status 1: normal 2: ban | 状态 1 正常 2 禁用
+	Status uint32 `json:"status,optional" validate:"omitempty,lt=20"`
+	// Username | 用户名
+	Username string `json:"username,optional" validate:"omitempty,max=50"`
+	// Description | 描述
+	Description string `json:"description,optional" validate:"omitempty,max=100"`
+	// Mobile | 手机号
+	Mobile string `json:"mobile,optional" validate:"max=18"`
+	// Email | 邮箱
+	Email string `json:"email,optional" validate:"email,max=80"`
+}
+
+type ChangePasswordRequest {
+	// User's old password | 用户旧密码
+	OldPassword string `json:"old_password" validate:"required,max=30"`
+	// User's new password | 用户新密码
+	NewPassword string `json:"new_password" validate:"required,max=30"`
+}
+
+// The log in information | 登陆返回的数据信息
+type LoginInfo {
+	// User's UUID | 用户的UUID
+	UserId string `json:"user_id"`
+	// Token for authorization | 验证身份的token
+	Token string `json:"token"`
+	// Expire timestamp | 过期时间戳
+	Expire uint64 `json:"expire"`
+}
+
+type LoginRequest {
+	// User Name | 用户名
+	Username string `json:"username" validate:"required,alphanum,max=20"`
+	// Password | 密码
+	Password string `json:"password" validate:"required,max=30,min=6"`
+}
+
+// The log in response data | 登录返回数据
+type LoginResponse {
+	// User's UUID | 用户的UUID
+	UserId uint `json:"user_id"`
+	// Token for authorization | 验证身份的token
+	Token string `json:"token"`
+	// Expire timestamp | 过期时间戳
+	ExpiredAt int64 `json:"expire_at"`
+}
+
+type UpdateUserProfileRequest {
+	// The user's avatar path | 用户的头像路径
+	Avatar string `json:"avatar" validate:"omitempty,max=300"`
+	// User's mobile phone number | 用户的手机号码
+	Mobile string `json:"mobile" validate:"omitempty,numeric,max=18"`
+	// The user's email address | 用户的邮箱
+	Email string `json:"email" validate:"omitempty,email,max=100"`
+}
+
+// Refresh token response data | 刷新令牌响应数据
+type RefreshTokenResponse {
+	// The token information | 令牌信息
+	Token     string `json:"token"`
+	ExpiredAt int64  `json:"expire_at"`
+}
+
