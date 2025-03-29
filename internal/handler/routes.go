@@ -17,67 +17,67 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/category/create",
+				Path:    "/create",
 				Handler: category.CreateCategoryHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/category"),
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/prompt/create",
+				Path:    "/create",
 				Handler: prompt.CreatePromptHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodDelete,
-				Path:    "/prompt/delete",
+				Path:    "/delete",
 				Handler: prompt.DeletePromptHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/prompt/update",
+				Path:    "/update",
 				Handler: prompt.UpdatePromptHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/prompt"),
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodPut,
-				Path:    "/user/change_password",
+				Path:    "/change_password",
 				Handler: user.ChangePasswordHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/user/create",
-				Handler: user.CreateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/login",
+				Path:    "/login",
 				Handler: user.LoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/user/logout",
+				Path:    "/logout",
 				Handler: user.LogoutHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/user/refresh_token",
+				Path:    "/refresh_token",
 				Handler: user.RefreshTokenHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPost,
+				Path:    "/register",
+				Handler: user.RegisterUserHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPut,
-				Path:    "/user/update",
+				Path:    "/update",
 				Handler: user.UpdateUserHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v1"),
+		rest.WithPrefix("/api/v1/user"),
 	)
 }

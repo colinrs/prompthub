@@ -1,3 +1,24 @@
 Name: prompthub-api
 Host: 0.0.0.0
-Port: 8888
+Port: 8080
+
+Log:
+  Mode: console
+  Encoding: plain
+  Level: debug
+
+DevServer:
+  Enabled: true
+
+Database:
+  Host: 192.168.0.100
+  Port: 3306
+  UserName: root
+  Password: "123456"
+  Database: prompthub
+  MaxIdleConn: 5
+  MaxOpenConn: 10
+  ConnMaxLifeTime: 1800
+
+Redis:
+  Host: 192.168.0.100:6379

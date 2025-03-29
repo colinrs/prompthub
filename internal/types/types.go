@@ -7,7 +7,8 @@ type ChangePasswordRequest struct {
 }
 
 type CreateCategoryRequest struct {
-	CategoryName string `json:"username" validate:"omitempty,max=50"`
+	CategoryName string `json:"category_name" validate:"omitempty,max=50"`
+	Color        string `json:"color" validate:"omitempty,max=50"`
 }
 
 type CreatePromptRequest struct {
@@ -15,32 +16,20 @@ type CreatePromptRequest struct {
 	Content    string `json:"content" validate:"max=10240"`
 }
 
-type CreateUserRequest struct {
-	Status      uint32 `json:"status,options=1|2" validate:"omitempty,lt=3"`
-	Username    string `json:"username" validate:"omitempty,max=50"`
-	Password    string `json:"password" validate:"min=6"`
-	Description string `json:"description,optional" validate:"omitempty,max=100"`
-	Mobile      string `json:"mobile" validate:"max=18"`
-	Email       string `json:"email" validate:"email,max=80"`
-}
-
 type DeletePromptRequest struct {
 	PromptID uint `json:"prompt_id" validate:"omitempty,min=1"`
 }
 
-type LoginInfo struct {
-	UserId string `json:"user_id"`
-	Token  string `json:"token"`
-	Expire uint64 `json:"expire"`
-}
-
 type LoginRequest struct {
-	Username string `json:"username" validate:"required,alphanum,max=20"`
+	Email    string `json:"email" validate:"required,max=50,email"`
 	Password string `json:"password" validate:"required,max=30,min=6"`
 }
 
 type LoginResponse struct {
 	UserId    uint   `json:"user_id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Avatar    string `json:"avatar"`
 	Token     string `json:"token"`
 	ExpiredAt int64  `json:"expire_at"`
 }
@@ -50,23 +39,21 @@ type RefreshTokenResponse struct {
 	ExpiredAt int64  `json:"expire_at"`
 }
 
+type RegisterUserRequest struct {
+	Name     string `json:"name" validate:"max=50"`
+	Password string `json:"password" validate:"min=6"`
+	Email    string `json:"email" validate:"email,max=80"`
+}
+
 type UpdatePromptRequest struct {
 	PromptID   uint   `json:"prompt_id" validate:"omitempty,min=1"`
 	PromptName string `json:"prompt_name" validate:"max=50"`
 	Content    string `json:"content" validate:"max=10240"`
 }
 
-type UpdateUserProfileRequest struct {
-	Avatar string `json:"avatar" validate:"omitempty,max=300"`
-	Mobile string `json:"mobile" validate:"omitempty,numeric,max=18"`
-	Email  string `json:"email" validate:"omitempty,email,max=100"`
-}
-
 type UpdateUserRequest struct {
-	UserID      uint   `json:"user_id" validate:"omitempty,min=1"`
-	Status      uint32 `json:"status,optional" validate:"omitempty,lt=20"`
-	Username    string `json:"username,optional" validate:"omitempty,max=50"`
-	Description string `json:"description,optional" validate:"omitempty,max=100"`
-	Mobile      string `json:"mobile,optional" validate:"max=18"`
-	Email       string `json:"email,optional" validate:"email,max=80"`
+	UserID uint   `json:"user_id" validate:"omitempty,min=1"`
+	Name   string `json:"name,optional" validate:"omitempty,max=50"`
+	Avatar string `json:"avatar" validate:"omitempty,max=300"`
+	Email  string `json:"email" validate:"omitempty,email,max=100"`
 }

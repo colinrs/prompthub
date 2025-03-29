@@ -2,15 +2,15 @@ syntax = "v1"
 
 @server (
 	group:  category
-	prefix: /api/v1
+	prefix: /api/v1/category
 )
 service prompthub-api {
-	// Create user information | 创建用户
 	@handler createCategory
-	post /category/create (CreateCategoryRequest)
+	post /create (CreateCategoryRequest)
 }
 
 type CreateCategoryRequest {
-	CategoryName string `json:"username" validate:"omitempty,max=50"`
+	CategoryName string `json:"category_name" validate:"omitempty,max=50"`
+	Color        string `json:"color" validate:"omitempty,max=50"`
 }
 

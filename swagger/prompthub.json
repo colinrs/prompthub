@@ -135,30 +135,6 @@
         ]
       }
     },
-    "/api/v1/user/create": {
-      "post": {
-        "operationId": "createUser",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {}
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateUserRequest"
-            }
-          }
-        ],
-        "tags": [
-          "user"
-        ]
-      }
-    },
     "/api/v1/user/login": {
       "post": {
         "operationId": "login",
@@ -215,6 +191,32 @@
         ]
       }
     },
+    "/api/v1/user/register": {
+      "post": {
+        "operationId": "registerUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "user"
+        ]
+      }
+    },
     "/api/v1/user/update": {
       "put": {
         "operationId": "updateUser",
@@ -260,13 +262,17 @@
     "CreateCategoryRequest": {
       "type": "object",
       "properties": {
-        "username": {
+        "category_name": {
+          "type": "string"
+        },
+        "color": {
           "type": "string"
         }
       },
       "title": "CreateCategoryRequest",
       "required": [
-        "username"
+        "category_name",
+        "color"
       ]
     },
     "CreatePromptRequest": {
@@ -285,42 +291,6 @@
         "content"
       ]
     },
-    "CreateUserRequest": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "integer",
-          "format": "int32",
-          "enum": [
-            "1",
-            "2"
-          ]
-        },
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "mobile": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "title": "CreateUserRequest",
-      "required": [
-        "status",
-        "username",
-        "password",
-        "mobile",
-        "email"
-      ]
-    },
     "DeletePromptRequest": {
       "type": "object",
       "properties": {
@@ -334,31 +304,10 @@
         "prompt_id"
       ]
     },
-    "LoginInfo": {
-      "type": "object",
-      "properties": {
-        "user_id": {
-          "type": "string"
-        },
-        "token": {
-          "type": "string"
-        },
-        "expire": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "LoginInfo",
-      "required": [
-        "user_id",
-        "token",
-        "expire"
-      ]
-    },
     "LoginRequest": {
       "type": "object",
       "properties": {
-        "username": {
+        "email": {
           "type": "string"
         },
         "password": {
@@ -367,7 +316,7 @@
       },
       "title": "LoginRequest",
       "required": [
-        "username",
+        "email",
         "password"
       ]
     },
@@ -377,6 +326,15 @@
         "user_id": {
           "type": "integer",
           "format": "uint32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
         },
         "token": {
           "type": "string"
@@ -389,6 +347,9 @@
       "title": "LoginResponse",
       "required": [
         "user_id",
+        "name",
+        "email",
+        "avatar",
         "token",
         "expire_at"
       ]
@@ -408,6 +369,26 @@
       "required": [
         "token",
         "expire_at"
+      ]
+    },
+    "RegisterUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterUserRequest",
+      "required": [
+        "name",
+        "password",
+        "email"
       ]
     },
     "UpdatePromptRequest": {
@@ -431,26 +412,6 @@
         "content"
       ]
     },
-    "UpdateUserProfileRequest": {
-      "type": "object",
-      "properties": {
-        "avatar": {
-          "type": "string"
-        },
-        "mobile": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "title": "UpdateUserProfileRequest",
-      "required": [
-        "avatar",
-        "mobile",
-        "email"
-      ]
-    },
     "UpdateUserRequest": {
       "type": "object",
       "properties": {
@@ -458,17 +419,10 @@
           "type": "integer",
           "format": "uint32"
         },
-        "status": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "username": {
+        "name": {
           "type": "string"
         },
-        "description": {
-          "type": "string"
-        },
-        "mobile": {
+        "avatar": {
           "type": "string"
         },
         "email": {
@@ -477,7 +431,9 @@
       },
       "title": "UpdateUserRequest",
       "required": [
-        "user_id"
+        "user_id",
+        "avatar",
+        "email"
       ]
     }
   },

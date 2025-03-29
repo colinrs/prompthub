@@ -2,17 +2,17 @@ syntax = "v1"
 
 @server (
 	group:  prompt
-	prefix: /api/v1
+	prefix: /api/v1/prompt
 )
 service prompthub-api {
 	@handler createPrompt
-	post /prompt/create (CreatePromptRequest)
+	post /create (CreatePromptRequest)
 
 	@handler updatePrompt
-	put /prompt/update (UpdatePromptRequest)
+	put /update (UpdatePromptRequest)
 
 	@handler deletePrompt
-	delete /prompt/delete (DeletePromptRequest)
+	delete /delete (DeletePromptRequest)
 }
 
 type CreatePromptRequest {
