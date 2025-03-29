@@ -21,6 +21,7 @@ var (
 	PromptsCountTable *promptsCountTable
 	PromptsTable      *promptsTable
 	UsersTable        *usersTable
+	UsersTokenTable   *usersTokenTable
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
@@ -29,6 +30,7 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	PromptsCountTable = &Q.PromptsCountTable
 	PromptsTable = &Q.PromptsTable
 	UsersTable = &Q.UsersTable
+	UsersTokenTable = &Q.UsersTokenTable
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
@@ -38,6 +40,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		PromptsCountTable: newPromptsCountTable(db, opts...),
 		PromptsTable:      newPromptsTable(db, opts...),
 		UsersTable:        newUsersTable(db, opts...),
+		UsersTokenTable:   newUsersTokenTable(db, opts...),
 	}
 }
 
@@ -48,6 +51,7 @@ type Query struct {
 	PromptsCountTable promptsCountTable
 	PromptsTable      promptsTable
 	UsersTable        usersTable
+	UsersTokenTable   usersTokenTable
 }
 
 func (q *Query) Available() bool { return q.db != nil }
@@ -59,6 +63,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		PromptsCountTable: q.PromptsCountTable.clone(db),
 		PromptsTable:      q.PromptsTable.clone(db),
 		UsersTable:        q.UsersTable.clone(db),
+		UsersTokenTable:   q.UsersTokenTable.clone(db),
 	}
 }
 
@@ -77,6 +82,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		PromptsCountTable: q.PromptsCountTable.replaceDB(db),
 		PromptsTable:      q.PromptsTable.replaceDB(db),
 		UsersTable:        q.UsersTable.replaceDB(db),
+		UsersTokenTable:   q.UsersTokenTable.replaceDB(db),
 	}
 }
 
@@ -85,6 +91,7 @@ type queryCtx struct {
 	PromptsCountTable IPromptsCountTableDo
 	PromptsTable      IPromptsTableDo
 	UsersTable        IUsersTableDo
+	UsersTokenTable   IUsersTokenTableDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
@@ -93,6 +100,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		PromptsCountTable: q.PromptsCountTable.WithContext(ctx),
 		PromptsTable:      q.PromptsTable.WithContext(ctx),
 		UsersTable:        q.UsersTable.WithContext(ctx),
+		UsersTokenTable:   q.UsersTokenTable.WithContext(ctx),
 	}
 }
 

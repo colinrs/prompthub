@@ -19,10 +19,6 @@ func RegisterUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 		l := user.NewRegisterUserLogic(r.Context(), svcCtx)
 		resp, err := l.RegisterUser(&req)
-		resp.UserId = 1
-		resp.Name = "qqq"
-		resp.Email = "yichuan.denf@qq.com"
-		resp.Token = "token"
 		httpy.ResultCtx(r, w, resp, err)
 	}
 }

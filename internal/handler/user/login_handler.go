@@ -6,6 +6,7 @@ import (
 	"github.com/colinrs/prompthub/internal/logic/user"
 	"github.com/colinrs/prompthub/internal/svc"
 	"github.com/colinrs/prompthub/internal/types"
+	"github.com/colinrs/prompthub/pkg/httpy"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -19,10 +20,6 @@ func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := user.NewLoginLogic(r.Context(), svcCtx)
 		resp, err := l.Login(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		httpy.ResultCtx(r, w, resp, err)
 	}
 }
