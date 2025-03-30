@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/colinrs/prompthub/gen"
 	"github.com/colinrs/prompthub/pkg/code"
+	"github.com/colinrs/prompthub/pkg/constant"
 	"github.com/colinrs/prompthub/pkg/utils"
 	"github.com/rs/xid"
 	"gorm.io/gorm"
@@ -48,10 +49,10 @@ func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, 
 	resp.Email = userInfo.Email
 	expiredAt := time.Now().Add(time.Duration(l.svcCtx.Config.JwtExpired) * time.Second).Unix()
 	claimsInfo := map[string]interface{}{
-		"user_id": userInfo.ID,
-		"name":    userInfo.UserName,
-		"email":   userInfo.Email,
-		"tid":     xid.New().String(),
+		constant.UserId:   userInfo.ID,
+		constant.UserName: userInfo.UserName,
+		constant.Email:    userInfo.Email,
+		"tid":             xid.New().String(),
 	}
 	resp.ExpiredAt = expiredAt
 	resp.Token, err = utils.GenerateJWT(claimsInfo, []byte(l.svcCtx.Config.JwtSecret), expiredAt)

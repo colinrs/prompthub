@@ -20,6 +20,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/create",
 				Handler: category.CreateCategoryHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: category.GetCategoryListHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/v1/category"),
 	)
@@ -35,6 +40,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodDelete,
 				Path:    "/delete",
 				Handler: prompt.DeletePromptHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/get",
+				Handler: prompt.GetPromptHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: prompt.ListPromptsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/search",
+				Handler: prompt.SearchPromptsHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
@@ -61,6 +81,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/logout",
 				Handler: user.LogoutHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/prompt/list",
+				Handler: user.GetUserPromptsListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/prompts/like",
+				Handler: user.GetUserLikePromptsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/prompts/save",
+				Handler: user.GetUserSavePromptsHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,

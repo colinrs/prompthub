@@ -19,6 +19,7 @@ type UsersTable struct {
 	Password    string         `gorm:"column:password;not null" json:"password"`
 	Email       string         `gorm:"column:email;not null" json:"email"`
 	UserStatus  int32          `gorm:"column:user_status;default:1" json:"user_status"`
+	Avatar      string         `gorm:"column:avatar" json:"avatar"`
 	Description string         `gorm:"column:description" json:"description"`
 	CreatedAt   time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt   time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`

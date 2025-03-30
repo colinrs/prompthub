@@ -20,6 +20,8 @@ var (
 	CategoryTable     *categoryTable
 	PromptsCountTable *promptsCountTable
 	PromptsTable      *promptsTable
+	UsersLike         *usersLike
+	UsersSave         *usersSave
 	UsersTable        *usersTable
 	UsersTokenTable   *usersTokenTable
 )
@@ -29,6 +31,8 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	CategoryTable = &Q.CategoryTable
 	PromptsCountTable = &Q.PromptsCountTable
 	PromptsTable = &Q.PromptsTable
+	UsersLike = &Q.UsersLike
+	UsersSave = &Q.UsersSave
 	UsersTable = &Q.UsersTable
 	UsersTokenTable = &Q.UsersTokenTable
 }
@@ -39,6 +43,8 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		CategoryTable:     newCategoryTable(db, opts...),
 		PromptsCountTable: newPromptsCountTable(db, opts...),
 		PromptsTable:      newPromptsTable(db, opts...),
+		UsersLike:         newUsersLike(db, opts...),
+		UsersSave:         newUsersSave(db, opts...),
 		UsersTable:        newUsersTable(db, opts...),
 		UsersTokenTable:   newUsersTokenTable(db, opts...),
 	}
@@ -50,6 +56,8 @@ type Query struct {
 	CategoryTable     categoryTable
 	PromptsCountTable promptsCountTable
 	PromptsTable      promptsTable
+	UsersLike         usersLike
+	UsersSave         usersSave
 	UsersTable        usersTable
 	UsersTokenTable   usersTokenTable
 }
@@ -62,6 +70,8 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		CategoryTable:     q.CategoryTable.clone(db),
 		PromptsCountTable: q.PromptsCountTable.clone(db),
 		PromptsTable:      q.PromptsTable.clone(db),
+		UsersLike:         q.UsersLike.clone(db),
+		UsersSave:         q.UsersSave.clone(db),
 		UsersTable:        q.UsersTable.clone(db),
 		UsersTokenTable:   q.UsersTokenTable.clone(db),
 	}
@@ -81,6 +91,8 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		CategoryTable:     q.CategoryTable.replaceDB(db),
 		PromptsCountTable: q.PromptsCountTable.replaceDB(db),
 		PromptsTable:      q.PromptsTable.replaceDB(db),
+		UsersLike:         q.UsersLike.replaceDB(db),
+		UsersSave:         q.UsersSave.replaceDB(db),
 		UsersTable:        q.UsersTable.replaceDB(db),
 		UsersTokenTable:   q.UsersTokenTable.replaceDB(db),
 	}
@@ -90,6 +102,8 @@ type queryCtx struct {
 	CategoryTable     ICategoryTableDo
 	PromptsCountTable IPromptsCountTableDo
 	PromptsTable      IPromptsTableDo
+	UsersLike         IUsersLikeDo
+	UsersSave         IUsersSaveDo
 	UsersTable        IUsersTableDo
 	UsersTokenTable   IUsersTokenTableDo
 }
@@ -99,6 +113,8 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		CategoryTable:     q.CategoryTable.WithContext(ctx),
 		PromptsCountTable: q.PromptsCountTable.WithContext(ctx),
 		PromptsTable:      q.PromptsTable.WithContext(ctx),
+		UsersLike:         q.UsersLike.WithContext(ctx),
+		UsersSave:         q.UsersSave.WithContext(ctx),
 		UsersTable:        q.UsersTable.WithContext(ctx),
 		UsersTokenTable:   q.UsersTokenTable.WithContext(ctx),
 	}

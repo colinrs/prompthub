@@ -11,6 +11,8 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.1
 	github.com/redis/go-redis/v9 v9.7.1
 	github.com/rs/xid v1.6.0
+	github.com/samber/lo v1.49.1
+	github.com/spf13/cast v1.7.1
 	github.com/zeromicro/go-zero v1.8.1
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gen v0.3.26

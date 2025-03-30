@@ -29,7 +29,7 @@ func newUsersTokenTable(db *gorm.DB, opts ...gen.DOOption) usersTokenTable {
 	_usersTokenTable.ALL = field.NewAsterisk(tableName)
 	_usersTokenTable.ID = field.NewInt32(tableName, "id")
 	_usersTokenTable.UserID = field.NewInt32(tableName, "user_id")
-	_usersTokenTable.PreEfreshToken = field.NewString(tableName, "pre_efresh_token")
+	_usersTokenTable.PreRefreshToken = field.NewString(tableName, "pre_refresh_token")
 	_usersTokenTable.RefreshToken = field.NewString(tableName, "refresh_token")
 	_usersTokenTable.CreatedAt = field.NewTime(tableName, "created_at")
 	_usersTokenTable.UpdatedAt = field.NewTime(tableName, "updated_at")
@@ -43,14 +43,14 @@ func newUsersTokenTable(db *gorm.DB, opts ...gen.DOOption) usersTokenTable {
 type usersTokenTable struct {
 	usersTokenTableDo
 
-	ALL            field.Asterisk
-	ID             field.Int32
-	UserID         field.Int32
-	PreEfreshToken field.String
-	RefreshToken   field.String
-	CreatedAt      field.Time
-	UpdatedAt      field.Time
-	DeletedAt      field.Field
+	ALL             field.Asterisk
+	ID              field.Int32
+	UserID          field.Int32
+	PreRefreshToken field.String
+	RefreshToken    field.String
+	CreatedAt       field.Time
+	UpdatedAt       field.Time
+	DeletedAt       field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -69,7 +69,7 @@ func (u *usersTokenTable) updateTableName(table string) *usersTokenTable {
 	u.ALL = field.NewAsterisk(table)
 	u.ID = field.NewInt32(table, "id")
 	u.UserID = field.NewInt32(table, "user_id")
-	u.PreEfreshToken = field.NewString(table, "pre_efresh_token")
+	u.PreRefreshToken = field.NewString(table, "pre_refresh_token")
 	u.RefreshToken = field.NewString(table, "refresh_token")
 	u.CreatedAt = field.NewTime(table, "created_at")
 	u.UpdatedAt = field.NewTime(table, "updated_at")
@@ -93,7 +93,7 @@ func (u *usersTokenTable) fillFieldMap() {
 	u.fieldMap = make(map[string]field.Expr, 7)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["user_id"] = u.UserID
-	u.fieldMap["pre_efresh_token"] = u.PreEfreshToken
+	u.fieldMap["pre_refresh_token"] = u.PreRefreshToken
 	u.fieldMap["refresh_token"] = u.RefreshToken
 	u.fieldMap["created_at"] = u.CreatedAt
 	u.fieldMap["updated_at"] = u.UpdatedAt

@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 	"errors"
+	"github.com/colinrs/prompthub/pkg/constant"
 
 	"time"
 
@@ -58,10 +59,10 @@ func (l *RegisterUserLogic) RegisterUser(req *types.RegisterUserRequest) (resp t
 	resp.Email = value.Email
 	expiredAt := time.Now().Add(time.Duration(l.svcCtx.Config.JwtExpired) * time.Second).Unix()
 	claimsInfo := map[string]interface{}{
-		"user_id": value.ID,
-		"name":    value.UserName,
-		"email":   value.Email,
-		"tid":     xid.New().String(),
+		constant.UserId:   value.ID,
+		constant.UserName: value.UserName,
+		constant.Email:    value.Email,
+		"tid":             xid.New().String(),
 	}
 	resp.ExpiredAt = expiredAt
 	resp.Token, err = utils.GenerateJWT(claimsInfo, []byte(l.svcCtx.Config.JwtSecret), expiredAt)

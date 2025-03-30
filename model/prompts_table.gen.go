@@ -17,9 +17,9 @@ type PromptsTable struct {
 	ID            int32          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
 	Title         string         `gorm:"column:title;not null" json:"title"`
 	Content       string         `gorm:"column:content;not null" json:"content"`
-	Category      string         `gorm:"column:category;not null" json:"category"`
+	Category      int32          `gorm:"column:category;not null" json:"category"`
 	PromptsStatus int32          `gorm:"column:prompts_status;default:1" json:"prompts_status"`
-	CreatedBy     string         `gorm:"column:created_by;not null" json:"created_by"`
+	CreatedBy     int32          `gorm:"column:created_by;not null" json:"created_by"`
 	CreatedAt     time.Time      `gorm:"column:created_at;default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt     time.Time      `gorm:"column:updated_at;default:CURRENT_TIMESTAMP" json:"updated_at"`
 	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`

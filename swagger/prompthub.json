@@ -39,6 +39,43 @@
         ]
       }
     },
+    "/api/v1/category/list": {
+      "get": {
+        "operationId": "getCategoryList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CategoryResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "10"
+          }
+        ],
+        "tags": [
+          "category"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
     "/api/v1/prompt/create": {
       "post": {
         "operationId": "createPrompt",
@@ -84,6 +121,130 @@
         ],
         "tags": [
           "prompt"
+        ]
+      }
+    },
+    "/api/v1/prompt/get": {
+      "get": {
+        "operationId": "getPrompt",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/Prompt"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "promptId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "uint32"
+          }
+        ],
+        "tags": [
+          "prompt"
+        ]
+      }
+    },
+    "/api/v1/prompt/list": {
+      "get": {
+        "operationId": "listPrompts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListPromptResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "10"
+          }
+        ],
+        "tags": [
+          "prompt"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/v1/prompt/search": {
+      "get": {
+        "operationId": "searchPrompts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SearchPromptsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "uint32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": "10"
+          }
+        ],
+        "tags": [
+          "prompt"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -175,6 +336,54 @@
         ]
       }
     },
+    "/api/v1/user/prompt/list": {
+      "get": {
+        "operationId": "getUserPromptsList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserPromptsResponse"
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v1/user/prompts/like": {
+      "get": {
+        "operationId": "getUserLikePrompts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserPromptsResponse"
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v1/user/prompts/save": {
+      "get": {
+        "operationId": "getUserSavePrompts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserPromptsResponse"
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
     "/api/v1/user/refresh_token": {
       "get": {
         "operationId": "refreshToken",
@@ -243,6 +452,57 @@
     }
   },
   "definitions": {
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        }
+      },
+      "title": "Category",
+      "required": [
+        "id",
+        "name",
+        "color"
+      ]
+    },
+    "CategoryResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category"
+          }
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CategoryResponse",
+      "required": [
+        "list",
+        "page",
+        "pageSize",
+        "total"
+      ]
+    },
     "ChangePasswordRequest": {
       "type": "object",
       "properties": {
@@ -262,7 +522,7 @@
     "CreateCategoryRequest": {
       "type": "object",
       "properties": {
-        "category_name": {
+        "categoryName": {
           "type": "string"
         },
         "color": {
@@ -271,14 +531,17 @@
       },
       "title": "CreateCategoryRequest",
       "required": [
-        "category_name",
-        "color"
+        "categoryName"
       ]
     },
     "CreatePromptRequest": {
       "type": "object",
       "properties": {
-        "prompt_name": {
+        "categoryId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "title": {
           "type": "string"
         },
         "content": {
@@ -287,22 +550,119 @@
       },
       "title": "CreatePromptRequest",
       "required": [
-        "prompt_name",
+        "categoryId",
+        "title",
         "content"
+      ]
+    },
+    "CreatedBy": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        }
+      },
+      "title": "CreatedBy",
+      "required": [
+        "userId",
+        "userName",
+        "avatar"
       ]
     },
     "DeletePromptRequest": {
       "type": "object",
       "properties": {
-        "prompt_id": {
+        "promptId": {
           "type": "integer",
           "format": "uint32"
         }
       },
       "title": "DeletePromptRequest",
       "required": [
-        "prompt_id"
+        "promptId"
       ]
+    },
+    "GetCategoryListRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "default": "1"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "default": "10"
+        }
+      },
+      "title": "GetCategoryListRequest"
+    },
+    "GetPromptRequest": {
+      "type": "object",
+      "properties": {
+        "promptId": {
+          "type": "integer",
+          "format": "uint32"
+        }
+      },
+      "title": "GetPromptRequest",
+      "required": [
+        "promptId"
+      ]
+    },
+    "ListPromptResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prompt"
+          }
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "ListPromptResponse",
+      "required": [
+        "list",
+        "page",
+        "pageSize",
+        "total"
+      ]
+    },
+    "ListPromptsRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "default": "1"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "default": "10"
+        }
+      },
+      "title": "ListPromptsRequest"
     },
     "LoginRequest": {
       "type": "object",
@@ -354,6 +714,67 @@
         "expire_at"
       ]
     },
+    "Prompt": {
+      "type": "object",
+      "properties": {
+        "promptId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "categoryColor": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "$ref": "#/definitions/CreatedBy"
+        },
+        "likes": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "liked": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "saved": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "Prompt",
+      "required": [
+        "promptId",
+        "title",
+        "content",
+        "categoryId",
+        "categoryColor",
+        "category",
+        "createdAt",
+        "updatedAt",
+        "createdBy",
+        "likes",
+        "liked",
+        "saved"
+      ]
+    },
     "RefreshTokenResponse": {
       "type": "object",
       "properties": {
@@ -391,14 +812,73 @@
         "email"
       ]
     },
-    "UpdatePromptRequest": {
+    "SearchPromptsRequest": {
       "type": "object",
       "properties": {
-        "prompt_id": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "category_id": {
           "type": "integer",
           "format": "uint32"
         },
-        "prompt_name": {
+        "sort": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "default": "1"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "default": "10"
+        }
+      },
+      "title": "SearchPromptsRequest"
+    },
+    "SearchPromptsResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prompt"
+          }
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "SearchPromptsResponse",
+      "required": [
+        "list",
+        "page",
+        "pageSize",
+        "total"
+      ]
+    },
+    "UpdatePromptRequest": {
+      "type": "object",
+      "properties": {
+        "promptId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "promptName": {
           "type": "string"
         },
         "content": {
@@ -407,8 +887,8 @@
       },
       "title": "UpdatePromptRequest",
       "required": [
-        "prompt_id",
-        "prompt_name",
+        "promptId",
+        "promptName",
         "content"
       ]
     },
@@ -434,6 +914,36 @@
         "user_id",
         "avatar",
         "email"
+      ]
+    },
+    "UserPromptsResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Prompt"
+          }
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "UserPromptsResponse",
+      "required": [
+        "list",
+        "page",
+        "pageSize",
+        "total"
       ]
     }
   },

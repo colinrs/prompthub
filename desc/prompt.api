@@ -13,20 +13,83 @@ service prompthub-api {
 
 	@handler deletePrompt
 	delete /delete (DeletePromptRequest)
+
+	@handler getPrompt
+	get /get (GetPromptRequest) returns (Prompt)
+
+	@handler listPrompts
+	get /list (ListPromptsRequest) returns (ListPromptResponse)
+
+	@handler searchPrompts
+	get /search (SearchPromptsRequest) returns (SearchPromptsResponse)
 }
 
 type CreatePromptRequest {
-	PromptName string `json:"prompt_name" validate:"max=50"`
+	CategoryId uint   `json:"categoryId" validate:"min=1"`
+	Title      string `json:"title" validate:"max=50"`
 	Content    string `json:"content" validate:"max=10240"`
 }
 
 type UpdatePromptRequest {
-	PromptID   uint   `json:"prompt_id" validate:"omitempty,min=1"`
-	PromptName string `json:"prompt_name" validate:"max=50"`
+	PromptID   uint   `json:"promptId" validate:"omitempty,min=1"`
+	PromptName string `json:"promptName" validate:"max=50"`
 	Content    string `json:"content" validate:"max=10240"`
 }
 
 type DeletePromptRequest {
-	PromptID uint `json:"prompt_id" validate:"omitempty,min=1"`
+	PromptID uint `json:"promptId" validate:"omitempty,min=1"`
+}
+
+type GetPromptRequest {
+	PromptID uint `json:"promptId" validate:"omitempty,min=1"`
+}
+
+type ListPromptsRequest {
+	Page     int `form:"page,optional,default=1"`
+	PageSize int `form:"pageSize,optional,default=10"`
+}
+
+type ListPromptResponse {
+	List     []Prompt `json:"list"`
+	Page     int      `json:"page"`
+	PageSize int      `json:"pageSize"`
+	Total    int      `json:"total"`
+}
+
+type Prompt {
+	PromptID      uint      `json:"promptId"`
+	Title         string    `json:"title"`
+	Content       string    `json:"content"`
+	CategoryID    uint      `json:"categoryId"`
+	CategoryColor string    `json:"categoryColor"`
+	Category      string    `json:"category"`
+	CreatedAt     string    `json:"createdAt"`
+	UpdatedAt     string    `json:"updatedAt"`
+	CreatedBy     CreatedBy `json:"createdBy"`
+	Likes         int       `json:"likes"`
+	Liked         bool      `json:"liked"`
+	Saved         bool      `json:"saved"`
+}
+
+type CreatedBy {
+	UserID   uint   `json:"userId"`
+	UserName string `json:"userName"`
+	Avatar   string `json:"avatar"`
+}
+
+type SearchPromptsRequest {
+	Title      string `form:"title,optional"`
+	Content    string `form:"content,optional"`
+	CategoryID uint   `form:"category_id,optional"`
+	Sort       string `form:"sort,optional"`
+	Page       int    `form:"page,optional,default=1"`
+	PageSize   int    `form:"pageSize,optional,default=10"`
+}
+
+type SearchPromptsResponse {
+	List     []Prompt `json:"list"`
+	Page     int      `json:"page"`
+	PageSize int      `json:"pageSize"`
+	Total    int      `json:"total"`
 }
 

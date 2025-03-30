@@ -30,9 +30,9 @@ func newPromptsTable(db *gorm.DB, opts ...gen.DOOption) promptsTable {
 	_promptsTable.ID = field.NewInt32(tableName, "id")
 	_promptsTable.Title = field.NewString(tableName, "title")
 	_promptsTable.Content = field.NewString(tableName, "content")
-	_promptsTable.Category = field.NewString(tableName, "category")
+	_promptsTable.Category = field.NewInt32(tableName, "category")
 	_promptsTable.PromptsStatus = field.NewInt32(tableName, "prompts_status")
-	_promptsTable.CreatedBy = field.NewString(tableName, "created_by")
+	_promptsTable.CreatedBy = field.NewInt32(tableName, "created_by")
 	_promptsTable.CreatedAt = field.NewTime(tableName, "created_at")
 	_promptsTable.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_promptsTable.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -49,9 +49,9 @@ type promptsTable struct {
 	ID            field.Int32
 	Title         field.String
 	Content       field.String
-	Category      field.String
+	Category      field.Int32
 	PromptsStatus field.Int32
-	CreatedBy     field.String
+	CreatedBy     field.Int32
 	CreatedAt     field.Time
 	UpdatedAt     field.Time
 	DeletedAt     field.Field
@@ -74,9 +74,9 @@ func (p *promptsTable) updateTableName(table string) *promptsTable {
 	p.ID = field.NewInt32(table, "id")
 	p.Title = field.NewString(table, "title")
 	p.Content = field.NewString(table, "content")
-	p.Category = field.NewString(table, "category")
+	p.Category = field.NewInt32(table, "category")
 	p.PromptsStatus = field.NewInt32(table, "prompts_status")
-	p.CreatedBy = field.NewString(table, "created_by")
+	p.CreatedBy = field.NewInt32(table, "created_by")
 	p.CreatedAt = field.NewTime(table, "created_at")
 	p.UpdatedAt = field.NewTime(table, "updated_at")
 	p.DeletedAt = field.NewField(table, "deleted_at")

@@ -1,5 +1,7 @@
 syntax = "v1"
 
+import "prompt.api"
+
 @server (
 	group:  user
 	prefix: /api/v1/user
@@ -22,6 +24,15 @@ service prompthub-api {
 
 	@handler refreshToken
 	get /refresh_token returns (RefreshTokenResponse)
+
+	@handler getUserSavePrompts
+	get /prompts/save returns (UserPromptsResponse)
+
+	@handler getUserLikePrompts
+	get /prompts/like returns (UserPromptsResponse)
+
+	@handler getUserPromptsList
+	get /prompt/list returns (UserPromptsResponse)
 }
 
 type RegisterUserRequest {
@@ -59,5 +70,12 @@ type LoginResponse {
 type RefreshTokenResponse {
 	Token     string `json:"token"`
 	ExpiredAt int64  `json:"expire_at"`
+}
+
+type UserPromptsResponse {
+	List     []Prompt `json:"list"`
+	Page     int      `json:"page"`
+	PageSize int      `json:"pageSize"`
+	Total    int      `json:"total"`
 }
 

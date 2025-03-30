@@ -23,6 +23,25 @@ func GenerateJWT(claimsInfo map[string]interface{}, signingKey []byte, expAt int
 	return tokenString, nil
 }
 
+func ParseJWT(tokenString string, signingKey []byte) (map[string]interface{}, bool) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return signingKey, nil
+	})
+	if err != nil {
+		return nil, false
+	}
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		if claims.VerifyExpiresAt(time.Now().Unix(), true) {
+			return claims, true
+		}
+		return claims, true
+	}
+	return nil, false
+}
+
 func VerifyJWT(tokenString string, signingKey []byte) bool {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

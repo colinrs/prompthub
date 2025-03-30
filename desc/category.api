@@ -7,10 +7,31 @@ syntax = "v1"
 service prompthub-api {
 	@handler createCategory
 	post /create (CreateCategoryRequest)
+
+	@handler getCategoryList
+	get /list (GetCategoryListRequest) returns (CategoryResponse)
 }
 
 type CreateCategoryRequest {
-	CategoryName string `json:"category_name" validate:"omitempty,max=50"`
-	Color        string `json:"color" validate:"omitempty,max=50"`
+	CategoryName string `json:"categoryName" validate:"max=50"`
+	Color        string `json:"color,optional" validate:"omitempty,max=50"`
+}
+
+type GetCategoryListRequest {
+	Page     int `form:"page,optional,default=1"`
+	PageSize int `form:"pageSize,optional,default=10"`
+}
+
+type CategoryResponse {
+	List     []Category `json:"list"`
+	Page     int        `json:"page"`
+	PageSize int        `json:"pageSize"`
+	Total    int        `json:"total"`
+}
+
+type Category {
+	Id    int64  `json:"id"`
+	Name  string `json:"name"`
+	Color string `json:"color"`
 }
 
