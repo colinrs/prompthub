@@ -1,12 +1,12 @@
 package prompt
 
 import (
-	"github.com/colinrs/prompthub/pkg/httpy"
 	"net/http"
 
 	"github.com/colinrs/prompthub/internal/logic/prompt"
 	"github.com/colinrs/prompthub/internal/svc"
 	"github.com/colinrs/prompthub/internal/types"
+	"github.com/colinrs/prompthub/pkg/httpy"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 

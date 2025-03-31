@@ -22,6 +22,12 @@ service prompthub-api {
 
 	@handler searchPrompts
 	get /search (SearchPromptsRequest) returns (SearchPromptsResponse)
+
+	@handler likePrompt
+	post /like (LikePromptRequest) returns (LikePromptResponse)
+
+	@handler savePrompt
+	post /save (SavePromptRequest) returns (SavePromptResponse)
 }
 
 type CreatePromptRequest {
@@ -37,11 +43,11 @@ type UpdatePromptRequest {
 }
 
 type DeletePromptRequest {
-	PromptID uint `json:"promptId" validate:"omitempty,min=1"`
+	PromptID uint `form:"promptId" validate:"omitempty,min=1"`
 }
 
 type GetPromptRequest {
-	PromptID uint `json:"promptId" validate:"omitempty,min=1"`
+	PromptID uint `form:"promptId" validate:"omitempty,min=1"`
 }
 
 type ListPromptsRequest {
@@ -57,7 +63,7 @@ type ListPromptResponse {
 }
 
 type Prompt {
-	PromptID      uint      `json:"promptId"`
+	Id            uint      `json:"id"`
 	Title         string    `json:"title"`
 	Content       string    `json:"content"`
 	CategoryID    uint      `json:"categoryId"`
@@ -92,4 +98,18 @@ type SearchPromptsResponse {
 	PageSize int      `json:"pageSize"`
 	Total    int      `json:"total"`
 }
+
+type LikePromptRequest {
+	PromptID uint   `json:"promptId" validate:"omitempty,min=1"`
+	Action   string `json:"action"` // like or unlike
+}
+
+type LikePromptResponse {}
+
+type SavePromptRequest {
+	PromptID uint   `json:"promptId" validate:"omitempty,min=1"`
+	Action   string `json:"action"` // save or unsave
+}
+
+type SavePromptResponse {}
 

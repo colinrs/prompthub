@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `prompts_count_table` (
                                  `updated_at` timestamp default CURRENT_TIMESTAMP,
                                  `deleted_at` timestamp DEFAULT NULL,
                                  PRIMARY KEY (`id`),
-                                 KEY `idx_prompts_id` (`prompts_id`) USING BTREE
+                                 UNIQUE `idx_prompts_id` (`prompts_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

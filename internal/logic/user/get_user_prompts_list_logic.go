@@ -88,7 +88,7 @@ func (l *GetUserPromptsListLogic) GetUserPromptsList() (resp *types.UserPromptsR
 				likes = int(habit.LikeCount)
 			}
 			return types.Prompt{
-				PromptID:      uint(item.ID),
+				Id:            uint(item.ID),
 				Title:         item.Title,
 				Content:       item.Content,
 				CategoryID:    uint(categoryID),

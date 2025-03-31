@@ -73,7 +73,7 @@ func (l *GetUserSavePromptsLogic) GetUserSavePrompts() (resp *types.UserPromptsR
 				likes = int(habit.LikeCount)
 			}
 			return types.Prompt{
-				PromptID:      item.PromptID,
+				Id:            item.PromptID,
 				Title:         item.Title,
 				Content:       item.Content,
 				CategoryID:    item.CategoryID,

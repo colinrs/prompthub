@@ -121,6 +121,9 @@
         ],
         "tags": [
           "prompt"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -142,6 +145,35 @@
             "required": true,
             "type": "integer",
             "format": "uint32"
+          }
+        ],
+        "tags": [
+          "prompt"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/v1/prompt/like": {
+      "post": {
+        "operationId": "likePrompt",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LikePromptResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LikePromptRequest"
+            }
           }
         ],
         "tags": [
@@ -183,6 +215,32 @@
         ],
         "consumes": [
           "multipart/form-data"
+        ]
+      }
+    },
+    "/api/v1/prompt/save": {
+      "post": {
+        "operationId": "savePrompt",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SavePromptResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SavePromptRequest"
+            }
+          }
+        ],
+        "tags": [
+          "prompt"
         ]
       }
     },
@@ -618,6 +676,28 @@
         "promptId"
       ]
     },
+    "LikePromptRequest": {
+      "type": "object",
+      "properties": {
+        "promptId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "action": {
+          "type": "string",
+          "description": " like or unlike"
+        }
+      },
+      "title": "LikePromptRequest",
+      "required": [
+        "promptId",
+        "action"
+      ]
+    },
+    "LikePromptResponse": {
+      "type": "object",
+      "title": "LikePromptResponse"
+    },
     "ListPromptResponse": {
       "type": "object",
       "properties": {
@@ -717,7 +797,7 @@
     "Prompt": {
       "type": "object",
       "properties": {
-        "promptId": {
+        "id": {
           "type": "integer",
           "format": "uint32"
         },
@@ -761,7 +841,7 @@
       },
       "title": "Prompt",
       "required": [
-        "promptId",
+        "id",
         "title",
         "content",
         "categoryId",
@@ -811,6 +891,28 @@
         "password",
         "email"
       ]
+    },
+    "SavePromptRequest": {
+      "type": "object",
+      "properties": {
+        "promptId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "action": {
+          "type": "string",
+          "description": " save or unsave"
+        }
+      },
+      "title": "SavePromptRequest",
+      "required": [
+        "promptId",
+        "action"
+      ]
+    },
+    "SavePromptResponse": {
+      "type": "object",
+      "title": "SavePromptResponse"
     },
     "SearchPromptsRequest": {
       "type": "object",

@@ -16,4 +16,5 @@ var (
 	ErrUserNotExist      = &Err{HTTPCode: http.StatusOK, Code: 20008, Msg: "用户不存在"}
 	ErrPasswordIncorrect = &Err{HTTPCode: http.StatusOK, Code: 20009, Msg: "用户密码错误"}
 	ErrUserNoLogin       = &Err{HTTPCode: http.StatusOK, Code: 20010, Msg: "用户未登录"}
+	PromptNotFound       = &Err{HTTPCode: http.StatusOK, Code: 20011, Msg: "prompt not found"}
 )

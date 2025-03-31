@@ -11,3 +11,10 @@ const (
 	PromptsStatusNormal = 1
 	PromptsStatusLocked = 2
 )
+
+const (
+	LikeAction   = "like"
+	UnlikeAction = "unlike"
+	SaveAction   = "save"
+	UnSaveAction = "unSave"
+)

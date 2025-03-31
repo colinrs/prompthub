@@ -37,7 +37,7 @@ type CreatedBy struct {
 }
 
 type DeletePromptRequest struct {
-	PromptID uint `json:"promptId" validate:"omitempty,min=1"`
+	PromptID uint `form:"promptId" validate:"omitempty,min=1"`
 }
 
 type GetCategoryListRequest struct {
@@ -46,7 +46,15 @@ type GetCategoryListRequest struct {
 }
 
 type GetPromptRequest struct {
-	PromptID uint `json:"promptId" validate:"omitempty,min=1"`
+	PromptID uint `form:"promptId" validate:"omitempty,min=1"`
+}
+
+type LikePromptRequest struct {
+	PromptID uint   `json:"promptId" validate:"omitempty,min=1"`
+	Action   string `json:"action"` // like or unlike
+}
+
+type LikePromptResponse struct {
 }
 
 type ListPromptResponse struct {
@@ -76,7 +84,7 @@ type LoginResponse struct {
 }
 
 type Prompt struct {
-	PromptID      uint      `json:"promptId"`
+	Id            uint      `json:"id"`
 	Title         string    `json:"title"`
 	Content       string    `json:"content"`
 	CategoryID    uint      `json:"categoryId"`
@@ -99,6 +107,14 @@ type RegisterUserRequest struct {
 	Name     string `json:"name" validate:"max=50"`
 	Password string `json:"password" validate:"min=6"`
 	Email    string `json:"email" validate:"email,max=80"`
+}
+
+type SavePromptRequest struct {
+	PromptID uint   `json:"promptId" validate:"omitempty,min=1"`
+	Action   string `json:"action"` // save or unsave
+}
+
+type SavePromptResponse struct {
 }
 
 type SearchPromptsRequest struct {

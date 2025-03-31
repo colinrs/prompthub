@@ -47,9 +47,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: prompt.GetPromptHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPost,
+				Path:    "/like",
+				Handler: prompt.LikePromptHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/list",
 				Handler: prompt.ListPromptsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/save",
+				Handler: prompt.SavePromptHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,

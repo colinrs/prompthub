@@ -2,6 +2,7 @@ package prompt
 
 import (
 	"context"
+	"github.com/colinrs/prompthub/gen"
 
 	"github.com/colinrs/prompthub/internal/svc"
 	"github.com/colinrs/prompthub/internal/types"
@@ -24,7 +25,7 @@ func NewDeletePromptLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dele
 }
 
 func (l *DeletePromptLogic) DeletePrompt(req *types.DeletePromptRequest) error {
-	// todo: add your logic here and delete this line
-
-	return nil
+	promptsTable := gen.Use(l.svcCtx.DB).PromptsTable
+	_, err := promptsTable.Where(promptsTable.ID.Eq(int32(req.PromptID))).Delete()
+	return err
 }

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `users_save` (
     `updated_at` timestamp default CURRENT_TIMESTAMP,
     `deleted_at` timestamp DEFAULT NULL,
     PRIMARY KEY (`id`),
-    KEY `idx_user_id` (`user_id`) USING BTREE
+    UNIQUE KEY `idx_user_prompt` (`user_id`, `prompts_id`) USING BTREE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

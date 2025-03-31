@@ -114,7 +114,7 @@ func (l *ListPromptsLogic) ListPrompts(req *types.ListPromptsRequest) (resp *typ
 			likes = int(habit.LikeCount)
 		}
 		resp.List = append(resp.List, types.Prompt{
-			PromptID:   uint(prompt.ID),
+			Id:         uint(prompt.ID),
 			Title:      prompt.Title,
 			Content:    prompt.Content,
 			CategoryID: uint(prompt.Category),
