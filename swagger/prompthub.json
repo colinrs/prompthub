@@ -580,7 +580,7 @@
     "CreateCategoryRequest": {
       "type": "object",
       "properties": {
-        "categoryName": {
+        "name": {
           "type": "string"
         },
         "color": {
@@ -589,7 +589,7 @@
       },
       "title": "CreateCategoryRequest",
       "required": [
-        "categoryName"
+        "name"
       ]
     },
     "CreatePromptRequest": {

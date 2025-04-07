@@ -20,8 +20,8 @@ type ChangePasswordRequest struct {
 }
 
 type CreateCategoryRequest struct {
-	CategoryName string `json:"categoryName" validate:"max=50"`
-	Color        string `json:"color,optional" validate:"omitempty,max=50"`
+	Name  string `json:"name" validate:"max=50"`
+	Color string `json:"color,optional" validate:"omitempty,max=50"`
 }
 
 type CreatePromptRequest struct {

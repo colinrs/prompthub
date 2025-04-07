@@ -67,7 +67,7 @@ func (l *LikePromptLogic) LikePrompt(req *types.LikePromptRequest) (resp *types.
 	}
 	if req.Action == config.UnlikeAction {
 		_, err = likeTable.Where(
-			likeTable.UserID.Eq(int32(userId)), likeTable.PromptsID.Eq(int32(req.PromptID))).tUnscoped().Delete()
+			likeTable.UserID.Eq(int32(userId)), likeTable.PromptsID.Eq(int32(req.PromptID))).Unscoped().Delete()
 		if err != nil {
 			return nil, err
 		}
