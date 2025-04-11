@@ -3,21 +3,16 @@ syntax = "v1"
 import "prompt.api"
 
 @server (
-	group:  user
-	prefix: /api/v1/user
+	group:      user
+	prefix:     /api/v1/user
+	middleware: UserLoginMiddleware
 )
 service prompthub-api {
-	@handler registerUser
-	post /register (RegisterUserRequest) returns (LoginResponse)
-
 	@handler updateUser
 	put /update (UpdateUserRequest)
 
 	@handler changePassword
 	put /change_password (ChangePasswordRequest)
-
-	@handler login
-	post /login (LoginRequest) returns (LoginResponse)
 
 	@handler logout
 	get /logout
@@ -34,6 +29,52 @@ service prompthub-api {
 	@handler getUserPromptsList
 	get /prompt/list returns (UserPromptsResponse)
 }
+
+@server (
+	group:      user
+	prefix:     /api/v1/user
+	middleware: UserNonLoginMiddleware
+)
+service prompthub-api {
+	@handler registerUser
+	post /register (RegisterUserRequest) returns (LoginResponse)
+
+	@handler login
+	post /login (LoginRequest) returns (LoginResponse)
+
+	@handler SendVerificationCode
+	post /send_verification_code (SendVerificationCodeRequest) returns (SendVerificationCodeResponse)
+
+	@handler VerificationCode
+	get /verification_code (VerificationCodeRequest) returns (VerificationCodeResponse)
+
+	@handler ResetPassword
+	post /reset_password (ResetPasswordRequest) returns (ResetPasswordResponse)
+}
+
+type VerificationCodeRequest {
+	Code  string `form:"code" validate:"required,min=6"`
+	Email string `form:"email" validate:"required,email,max=100"`
+}
+
+type VerificationCodeResponse {}
+
+type ResetPasswordRequest {
+	Email       string `json:"email" validate:"required,email,max=100"`
+	Code        string `json:"code" validate:"required,max=6"`
+	NewPassword string `json:"newPassword" validate:"required,min=6"`
+}
+
+type ResetPasswordResponse {
+	Message string `json:"message"`
+}
+
+type SendVerificationCodeRequest {
+	Email string `json:"email" validate:"required,email,max=100"`
+	Event string `json:"event" validate:"required,oneof=forgotPassword emailVerification"`
+}
+
+type SendVerificationCodeResponse {}
 
 type RegisterUserRequest {
 	Name     string `json:"name" validate:"max=50"`

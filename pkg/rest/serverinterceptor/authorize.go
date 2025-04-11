@@ -31,7 +31,7 @@ type (
 )
 
 // Authorize returns an authorization middleware.
-func Authorize(secret string, opts ...AuthorizeOption) func(http.Handler) http.Handler {
+func Authorize(secret string, forceLogin bool, opts ...AuthorizeOption) func(http.Handler) http.Handler {
 	var authOpts AuthorizeOptions
 	authOpts.Secret = []byte(secret)
 	for _, opt := range opts {
@@ -45,13 +45,13 @@ func Authorize(secret string, opts ...AuthorizeOption) func(http.Handler) http.H
 				return
 			}
 			Bearer := "Bearer "
-			if len(token) < len(Bearer) || token[:len(Bearer)] != Bearer {
+			if len(token) < len(Bearer) || token[:len(Bearer)] != Bearer && forceLogin {
 				unauthorized(w, r, errInvalidToken, nil)
 				return
 			}
 			token = token[len(Bearer):]
 			claims, ok := utils.ParseJWT(token, authOpts.Secret)
-			if !ok {
+			if !ok && forceLogin {
 				unauthorized(w, r, errInvalidToken, nil)
 				return
 			}
@@ -64,6 +64,40 @@ func Authorize(secret string, opts ...AuthorizeOption) func(http.Handler) http.H
 			}
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
+	}
+}
+
+func AuthorizeHandle(secret string, forceLogin bool, opts ...AuthorizeOption) func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	var authOpts AuthorizeOptions
+	authOpts.Secret = []byte(secret)
+	for _, opt := range opts {
+		opt(&authOpts)
+	}
+	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+		token := r.Header.Get("Authorization")
+		if len(token) == 0 {
+			next.ServeHTTP(w, r)
+			return
+		}
+		Bearer := "Bearer "
+		if len(token) < len(Bearer) || token[:len(Bearer)] != Bearer && forceLogin {
+			unauthorized(w, r, errInvalidToken, nil)
+			return
+		}
+		token = token[len(Bearer):]
+		claims, ok := utils.ParseJWT(token, authOpts.Secret)
+		if !ok && forceLogin {
+			unauthorized(w, r, errInvalidToken, nil)
+			return
+		}
+		ctx := r.Context()
+		for k, v := range claims {
+			switch k {
+			case constant.UserId, constant.UserName, constant.Email:
+				ctx = context.WithValue(ctx, k, v)
+			}
+		}
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 }
 

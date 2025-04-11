@@ -269,7 +269,7 @@
             "type": "string"
           },
           {
-            "name": "category_id",
+            "name": "categoryId",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -277,6 +277,7 @@
           },
           {
             "name": "sort",
+            "description": " popular,newest",
             "in": "query",
             "required": false,
             "type": "string"
@@ -484,6 +485,58 @@
         ]
       }
     },
+    "/api/v1/user/reset_password": {
+      "post": {
+        "operationId": "ResetPassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordRequest"
+            }
+          }
+        ],
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v1/user/send_verification_code": {
+      "post": {
+        "operationId": "SendVerificationCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SendVerificationCodeResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendVerificationCodeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "user"
+        ]
+      }
+    },
     "/api/v1/user/update": {
       "put": {
         "operationId": "updateUser",
@@ -505,6 +558,39 @@
         ],
         "tags": [
           "user"
+        ]
+      }
+    },
+    "/api/v1/user/verification_code": {
+      "get": {
+        "operationId": "VerificationCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/VerificationCodeResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     }
@@ -892,6 +978,38 @@
         "email"
       ]
     },
+    "ResetPasswordRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      },
+      "title": "ResetPasswordRequest",
+      "required": [
+        "email",
+        "code",
+        "newPassword"
+      ]
+    },
+    "ResetPasswordResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "ResetPasswordResponse",
+      "required": [
+        "message"
+      ]
+    },
     "SavePromptRequest": {
       "type": "object",
       "properties": {
@@ -923,12 +1041,13 @@
         "content": {
           "type": "string"
         },
-        "category_id": {
+        "categoryId": {
           "type": "integer",
           "format": "uint32"
         },
         "sort": {
-          "type": "string"
+          "type": "string",
+          "description": " popular,newest"
         },
         "page": {
           "type": "integer",
@@ -972,6 +1091,26 @@
         "pageSize",
         "total"
       ]
+    },
+    "SendVerificationCodeRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string"
+        }
+      },
+      "title": "SendVerificationCodeRequest",
+      "required": [
+        "email",
+        "event"
+      ]
+    },
+    "SendVerificationCodeResponse": {
+      "type": "object",
+      "title": "SendVerificationCodeResponse"
     },
     "UpdatePromptRequest": {
       "type": "object",
@@ -1047,6 +1186,26 @@
         "pageSize",
         "total"
       ]
+    },
+    "VerificationCodeRequest": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "VerificationCodeRequest",
+      "required": [
+        "code",
+        "email"
+      ]
+    },
+    "VerificationCodeResponse": {
+      "type": "object",
+      "title": "VerificationCodeResponse"
     }
   },
   "securityDefinitions": {

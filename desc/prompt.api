@@ -1,8 +1,9 @@
 syntax = "v1"
 
 @server (
-	group:  prompt
-	prefix: /api/v1/prompt
+	group:      prompt
+	prefix:     /api/v1/prompt
+	middleware: UserLoginMiddleware
 )
 service prompthub-api {
 	@handler createPrompt
@@ -14,6 +15,19 @@ service prompthub-api {
 	@handler deletePrompt
 	delete /delete (DeletePromptRequest)
 
+	@handler likePrompt
+	post /like (LikePromptRequest) returns (LikePromptResponse)
+
+	@handler savePrompt
+	post /save (SavePromptRequest) returns (SavePromptResponse)
+}
+
+@server (
+	group:      prompt
+	prefix:     /api/v1/prompt
+	middleware: UserLoginMiddleware
+)
+service prompthub-api {
 	@handler getPrompt
 	get /get (GetPromptRequest) returns (Prompt)
 
@@ -22,12 +36,6 @@ service prompthub-api {
 
 	@handler searchPrompts
 	get /search (SearchPromptsRequest) returns (SearchPromptsResponse)
-
-	@handler likePrompt
-	post /like (LikePromptRequest) returns (LikePromptResponse)
-
-	@handler savePrompt
-	post /save (SavePromptRequest) returns (SavePromptResponse)
 }
 
 type CreatePromptRequest {
@@ -86,8 +94,8 @@ type CreatedBy {
 type SearchPromptsRequest {
 	Title      string `form:"title,optional"`
 	Content    string `form:"content,optional"`
-	CategoryID uint   `form:"category_id,optional"`
-	Sort       string `form:"sort,optional"`
+	CategoryID uint   `form:"categoryId,optional"`
+	Sort       string `form:"sort,optional"` // popular,newest
 	Page       int    `form:"page,optional,default=1"`
 	PageSize   int    `form:"pageSize,optional,default=10"`
 }

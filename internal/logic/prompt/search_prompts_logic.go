@@ -2,15 +2,17 @@ package prompt
 
 import (
 	"context"
-	"golang.org/x/sync/errgroup"
+	"sort"
 
 	"github.com/colinrs/prompthub/gen"
 	"github.com/colinrs/prompthub/internal/config"
 	"github.com/colinrs/prompthub/internal/manager"
 	"github.com/colinrs/prompthub/internal/svc"
 	"github.com/colinrs/prompthub/internal/types"
+	"github.com/colinrs/prompthub/pkg/utils"
 	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
+	"golang.org/x/sync/errgroup"
 	gormgen "gorm.io/gen"
 )
 
@@ -31,8 +33,9 @@ func NewSearchPromptsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Sea
 func (l *SearchPromptsLogic) SearchPrompts(req *types.SearchPromptsRequest) (resp *types.SearchPromptsResponse, err error) {
 	promptsTable := gen.Use(l.svcCtx.DB).PromptsTable
 	query := promptsTable.Where(promptsTable.PromptsStatus.Eq(config.PromptsStatusNormal))
-
+	offset, limit := utils.Page(req.Page, req.PageSize)
 	likeConds := make([]gormgen.Condition, 0, 2)
+
 	if req.Title != "" {
 		likeConds = append(likeConds, promptsTable.Title.Like("%"+req.Title+"%"))
 	}
@@ -45,14 +48,18 @@ func (l *SearchPromptsLogic) SearchPrompts(req *types.SearchPromptsRequest) (res
 	if req.CategoryID != 0 {
 		query = query.Where(promptsTable.Category.Eq(int32(req.CategoryID)))
 	}
-	promptList, err := query.Find()
-	if err != nil {
-		return nil, err
-	}
 	total, err := query.Count()
 	if err != nil {
 		return nil, err
 	}
+	if req.Sort == config.Newest {
+		query = query.Order(promptsTable.CreatedAt.Desc())
+	}
+	promptList, err := query.Offset(offset).Limit(limit).Find()
+	if err != nil {
+		return nil, err
+	}
+
 	promptIds := make([]int32, 0, len(promptList))
 	for _, prompt := range promptList {
 		promptIds = append(promptIds, prompt.ID)
@@ -114,6 +121,11 @@ func (l *SearchPromptsLogic) SearchPrompts(req *types.SearchPromptsRequest) (res
 		}),
 		Page:     req.Page,
 		PageSize: req.PageSize,
+	}
+	if req.Sort == config.Popularity {
+		sort.Slice(resp.List, func(i, j int) bool {
+			return resp.List[i].Likes > resp.List[j].Likes
+		})
 	}
 	return
 }

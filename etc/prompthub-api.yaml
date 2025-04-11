@@ -6,6 +6,7 @@ Log:
   Mode: console
   Encoding: plain
   Level: debug
+  Status: false
 
 DevServer:
   Enabled: true
@@ -23,6 +24,12 @@ Database:
 Redis:
   Host: 192.168.0.100:6379
 
+CodeTime:
+  VerificationCodeExpire: 86400
+  PasswordResetCodeExpire: 600
+
 PasswdSecret: "CscaKGoqdq0"
 JwtSecret: 'JwtSecret'
 JwtExpired: 86400
+WebsiteUrl: http://192.168.0.114:8082/verification
+EmailSubject: "PMPsh Email Verification"

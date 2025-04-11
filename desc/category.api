@@ -1,13 +1,21 @@
 syntax = "v1"
 
 @server (
-	group:  category
-	prefix: /api/v1/category
+	group:      category
+	prefix:     /api/v1/category
+	middleware: UserLoginMiddleware
 )
 service prompthub-api {
 	@handler createCategory
 	post /create (CreateCategoryRequest)
+}
 
+@server (
+	group:      category
+	prefix:     /api/v1/category
+	middleware: UserNonLoginMiddleware
+)
+service prompthub-api {
 	@handler getCategoryList
 	get /list (GetCategoryListRequest) returns (CategoryResponse)
 }

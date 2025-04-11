@@ -109,6 +109,16 @@ type RegisterUserRequest struct {
 	Email    string `json:"email" validate:"email,max=80"`
 }
 
+type ResetPasswordRequest struct {
+	Email       string `json:"email" validate:"required,email,max=100"`
+	Code        string `json:"code" validate:"required,max=6"`
+	NewPassword string `json:"newPassword" validate:"required,min=6"`
+}
+
+type ResetPasswordResponse struct {
+	Message string `json:"message"`
+}
+
 type SavePromptRequest struct {
 	PromptID uint   `json:"promptId" validate:"omitempty,min=1"`
 	Action   string `json:"action"` // save or unsave
@@ -120,8 +130,8 @@ type SavePromptResponse struct {
 type SearchPromptsRequest struct {
 	Title      string `form:"title,optional"`
 	Content    string `form:"content,optional"`
-	CategoryID uint   `form:"category_id,optional"`
-	Sort       string `form:"sort,optional"`
+	CategoryID uint   `form:"categoryId,optional"`
+	Sort       string `form:"sort,optional"` // popular,newest
 	Page       int    `form:"page,optional,default=1"`
 	PageSize   int    `form:"pageSize,optional,default=10"`
 }
@@ -131,6 +141,14 @@ type SearchPromptsResponse struct {
 	Page     int      `json:"page"`
 	PageSize int      `json:"pageSize"`
 	Total    int      `json:"total"`
+}
+
+type SendVerificationCodeRequest struct {
+	Email string `json:"email" validate:"required,email,max=100"`
+	Event string `json:"event" validate:"required,oneof=forgotPassword emailVerification"`
+}
+
+type SendVerificationCodeResponse struct {
 }
 
 type UpdatePromptRequest struct {
@@ -151,4 +169,12 @@ type UserPromptsResponse struct {
 	Page     int      `json:"page"`
 	PageSize int      `json:"pageSize"`
 	Total    int      `json:"total"`
+}
+
+type VerificationCodeRequest struct {
+	Code  string `form:"code" validate:"required,min=6"`
+	Email string `form:"email" validate:"required,email,max=100"`
+}
+
+type VerificationCodeResponse struct {
 }
