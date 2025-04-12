@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/colinrs/prompthub/pkg/httpy"
 	"net/http"
 
 	"github.com/colinrs/prompthub/internal/logic/user"
@@ -13,16 +14,12 @@ func ChangePasswordHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ChangePasswordRequest
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpy.ResultCtx(r, w, nil, err)
 			return
 		}
 
 		l := user.NewChangePasswordLogic(r.Context(), svcCtx)
 		err := l.ChangePassword(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.Ok(w)
-		}
+		httpy.ResultCtx(r, w, nil, err)
 	}
 }

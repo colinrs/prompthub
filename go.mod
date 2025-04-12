@@ -13,6 +13,7 @@ require (
 	github.com/go-playground/validator/v10 v10.25.0
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/golang-jwt/jwt/v4 v4.5.1
+	github.com/kirklin/go-swd v0.0.2
 	github.com/redis/go-redis/v9 v9.7.1
 	github.com/rs/xid v1.6.0
 	github.com/samber/lo v1.49.1

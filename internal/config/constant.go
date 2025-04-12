@@ -21,8 +21,13 @@ const (
 
 	Newest     = "newest"
 	Popularity = "popular"
+
+	EmailVerificationEvent = "emailVerification"
+	ForgotPasswordEvent    = "forgotPassword"
 )
 
 const (
-	VerificationCode = "verification_code"
+	VerificationCode             = "verification_code"
+	VerificationEmailLimitKey    = "verification_limit_key"
+	SingleVerificationEmailLimit = "single_verification_limit"
 )

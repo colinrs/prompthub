@@ -31,5 +31,7 @@ CodeTime:
 PasswdSecret: "CscaKGoqdq0"
 JwtSecret: 'JwtSecret'
 JwtExpired: 86400
-WebsiteUrl: http://192.168.0.114:8082/verification
+WebsiteUrl: http://192.168.0.115:8082/verification
 EmailSubject: "PMPsh Email Verification"
+SingleVerificationEmailLimit: 2
+VerificationEmailLimit: 10

@@ -1,6 +1,7 @@
 package category
 
 import (
+	"github.com/colinrs/prompthub/pkg/code"
 	"net/http"
 
 	"github.com/colinrs/prompthub/internal/logic/category"
@@ -17,7 +18,9 @@ func CreateCategoryHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpy.ResultCtx(r, w, nil, err)
 			return
 		}
-
+		if svcCtx.DetectorSWD.Detect(req.Name + req.Color) {
+			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
+		}
 		l := category.NewCreateCategoryLogic(r.Context(), svcCtx)
 		err := l.CreateCategory(&req)
 		httpy.ResultCtx(r, w, nil, err)

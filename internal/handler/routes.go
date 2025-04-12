@@ -135,7 +135,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 				{
 					Method:  http.MethodPut,
-					Path:    "/update",
+					Path:    "/update_profile",
 					Handler: user.UpdateUserHandler(serverCtx),
 				},
 			}...,
@@ -147,6 +147,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		rest.WithMiddlewares(
 			[]rest.Middleware{serverCtx.UserNonLoginMiddleware},
 			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/forgot_password",
+					Handler: user.ForgotPasswordHandler(serverCtx),
+				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/login",

@@ -88,7 +88,7 @@ func (p *promptImpl) GetPromptDetailByIds(ids []int32) ([]*PromptDetail, error) 
 			userName = user.UserName
 			avatar = user.Avatar
 		}
-		categoryName := ""
+		categoryName := "None"
 		if category, ok := categoryMap[prompt.Category]; ok {
 			categoryName = category.CategoryName
 		}

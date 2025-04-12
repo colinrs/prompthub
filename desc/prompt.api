@@ -45,8 +45,9 @@ type CreatePromptRequest {
 }
 
 type UpdatePromptRequest {
-	PromptID   uint   `json:"promptId" validate:"omitempty,min=1"`
-	PromptName string `json:"promptName" validate:"max=50"`
+	ID         uint   `json:"id" validate:"omitempty,min=1"`
+	CategoryId uint   `json:"categoryId" validate:"min=1"`
+	Title      string `json:"title" validate:"max=50"`
 	Content    string `json:"content" validate:"max=10240"`
 }
 

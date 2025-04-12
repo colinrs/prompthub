@@ -9,7 +9,7 @@ import "prompt.api"
 )
 service prompthub-api {
 	@handler updateUser
-	put /update (UpdateUserRequest)
+	put /update_profile (UpdateUserRequest)
 
 	@handler changePassword
 	put /change_password (ChangePasswordRequest)
@@ -50,7 +50,16 @@ service prompthub-api {
 
 	@handler ResetPassword
 	post /reset_password (ResetPasswordRequest) returns (ResetPasswordResponse)
+
+	@handler ForgotPassword
+	post /forgot_password (ForgotPasswordnRequest) returns (ForgotPasswordnResponse)
 }
+
+type ForgotPasswordnRequest {
+	Email string `json:"email" validate:"required,email,max=100"`
+}
+
+type ForgotPasswordnResponse {}
 
 type VerificationCodeRequest {
 	Code  string `form:"code" validate:"required,min=6"`
@@ -83,10 +92,8 @@ type RegisterUserRequest {
 }
 
 type UpdateUserRequest {
-	UserID uint   `json:"user_id" validate:"omitempty,min=1"`
 	Name   string `json:"name,optional" validate:"omitempty,max=50"`
 	Avatar string `json:"avatar" validate:"omitempty,max=300"`
-	Email  string `json:"email" validate:"omitempty,email,max=100"`
 }
 
 type ChangePasswordRequest {

@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 	"fmt"
+
 	"github.com/colinrs/prompthub/gen"
 	"github.com/colinrs/prompthub/internal/config"
 	"github.com/colinrs/prompthub/internal/svc"

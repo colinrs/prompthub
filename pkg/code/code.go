@@ -20,4 +20,7 @@ var (
 	ErrCategoryAlreadyExists   = &Err{HTTPCode: http.StatusOK, Code: 20012, Msg: "分类已存在"}
 	ErrVerificationCodeInvalid = &Err{HTTPCode: http.StatusOK, Code: 20013, Msg: "验证码无效"}
 	ErrEmailVerification       = &Err{HTTPCode: http.StatusOK, Code: 20014, Msg: "用户邮件待验证"}
+	ErrVerificationLimitExceed = &Err{HTTPCode: http.StatusOK, Code: 20015, Msg: "验证次数超过限制"}
+	ErrPasswordSameInvalid     = &Err{HTTPCode: http.StatusOK, Code: 20016, Msg: "密码和之前密码相同"}
+	ErrSensitiveWord           = &Err{HTTPCode: http.StatusOK, Code: 20017, Msg: "包含敏感词"}
 )

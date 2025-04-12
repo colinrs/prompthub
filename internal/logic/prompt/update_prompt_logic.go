@@ -2,6 +2,10 @@ package prompt
 
 import (
 	"context"
+	"errors"
+	"github.com/colinrs/prompthub/gen"
+	"github.com/colinrs/prompthub/pkg/code"
+	"gorm.io/gorm"
 
 	"github.com/colinrs/prompthub/internal/svc"
 	"github.com/colinrs/prompthub/internal/types"
@@ -24,7 +28,30 @@ func NewUpdatePromptLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 }
 
 func (l *UpdatePromptLogic) UpdatePrompt(req *types.UpdatePromptRequest) error {
-	// todo: add your logic here and delete this line
+	categoryTable := gen.Use(l.svcCtx.DB).CategoryTable
+	category, err := categoryTable.Where(categoryTable.ID.Eq(int32(req.CategoryId))).First()
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+	if category == nil {
+		return code.ErrParam
+	}
+
+	promptsTable := gen.Use(l.svcCtx.DB).PromptsTable
+	prompt, err := promptsTable.Where(promptsTable.ID.Eq(int32(req.ID))).First()
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return err
+	}
+	if prompt == nil {
+		return code.ErrParam
+	}
+	prompt.Title = req.Title
+	prompt.Content = req.Content
+	prompt.Category = int32(req.CategoryId)
+	err = promptsTable.Where(promptsTable.ID.Eq(int32(req.ID))).Save(prompt)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

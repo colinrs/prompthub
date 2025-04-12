@@ -1,6 +1,7 @@
 package prompt
 
 import (
+	"github.com/colinrs/prompthub/pkg/code"
 	"net/http"
 
 	"github.com/colinrs/prompthub/internal/logic/prompt"
@@ -17,7 +18,9 @@ func CreatePromptHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpy.ResultCtx(r, w, nil, err)
 			return
 		}
-
+		if svcCtx.DetectorSWD.Detect(req.Title + req.Content) {
+			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
+		}
 		l := prompt.NewCreatePromptLogic(r.Context(), svcCtx)
 		err := l.CreatePrompt(&req)
 		httpy.ResultCtx(r, w, nil, err)

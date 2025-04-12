@@ -40,6 +40,13 @@ type DeletePromptRequest struct {
 	PromptID uint `form:"promptId" validate:"omitempty,min=1"`
 }
 
+type ForgotPasswordnRequest struct {
+	Email string `json:"email" validate:"required,email,max=100"`
+}
+
+type ForgotPasswordnResponse struct {
+}
+
 type GetCategoryListRequest struct {
 	Page     int `form:"page,optional,default=1"`
 	PageSize int `form:"pageSize,optional,default=10"`
@@ -152,16 +159,15 @@ type SendVerificationCodeResponse struct {
 }
 
 type UpdatePromptRequest struct {
-	PromptID   uint   `json:"promptId" validate:"omitempty,min=1"`
-	PromptName string `json:"promptName" validate:"max=50"`
+	ID         uint   `json:"id" validate:"omitempty,min=1"`
+	CategoryId uint   `json:"categoryId" validate:"min=1"`
+	Title      string `json:"title" validate:"max=50"`
 	Content    string `json:"content" validate:"max=10240"`
 }
 
 type UpdateUserRequest struct {
-	UserID uint   `json:"user_id" validate:"omitempty,min=1"`
 	Name   string `json:"name,optional" validate:"omitempty,max=50"`
 	Avatar string `json:"avatar" validate:"omitempty,max=300"`
-	Email  string `json:"email" validate:"omitempty,email,max=100"`
 }
 
 type UserPromptsResponse struct {

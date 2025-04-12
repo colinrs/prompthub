@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"github.com/colinrs/prompthub/gen"
 	"github.com/colinrs/prompthub/internal/config"
-	"github.com/colinrs/prompthub/pkg/code"
-	"github.com/colinrs/prompthub/pkg/utils"
-
 	"github.com/colinrs/prompthub/internal/svc"
 	"github.com/colinrs/prompthub/internal/types"
+	"github.com/colinrs/prompthub/pkg/code"
+	"github.com/colinrs/prompthub/pkg/utils"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -45,6 +44,10 @@ func (l *ResetPasswordLogic) ResetPassword(req *types.ResetPasswordRequest) (res
 	}
 	if !(value == req.Email && value == userInfo.Email) {
 		return nil, code.ErrVerificationCodeInvalid
+	}
+	newPasswd := utils.HashPassword(req.NewPassword, l.svcCtx.Config.PasswdSecret)
+	if newPasswd == req.NewPassword {
+		return nil, code.ErrPasswordSameInvalid
 	}
 	userInfo.Password = utils.HashPassword(req.NewPassword, l.svcCtx.Config.PasswdSecret)
 	_, err = userTable.Where(userTable.ID.Eq(userInfo.ID)).Updates(userInfo)

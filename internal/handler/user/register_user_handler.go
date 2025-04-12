@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/colinrs/prompthub/pkg/code"
 	"net/http"
 
 	"github.com/colinrs/prompthub/internal/logic/user"
@@ -16,6 +17,9 @@ func RegisterUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		if err := httpy.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
+		}
+		if svcCtx.DetectorSWD.Detect(req.Name + req.Email) {
+			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
 		}
 		l := user.NewRegisterUserLogic(r.Context(), svcCtx)
 		resp, err := l.RegisterUser(&req)

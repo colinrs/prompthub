@@ -93,8 +93,13 @@ type EmailData struct {
 	EffectiveTime         string `json:"EffectiveTime"`
 }
 
+type ForgotPasswordData struct {
+	VerificationCode string `json:"VerificationCode"`
+	EffectiveTime    string `json:"EffectiveTime"`
+}
+
 // RenderEmailTemplate 渲染 HTML 模板
-func RenderEmailTemplate(templatePath string, data EmailData) (string, error) {
+func RenderEmailTemplate(templatePath string, data interface{}) (string, error) {
 	absPath, err := filepath.Abs(templatePath)
 	if err != nil {
 		return "", fmt.Errorf("resolve absolute path: %w", err)

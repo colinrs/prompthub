@@ -355,6 +355,32 @@
         ]
       }
     },
+    "/api/v1/user/forgot_password": {
+      "post": {
+        "operationId": "ForgotPassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ForgotPasswordnResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ForgotPasswordnRequest"
+            }
+          }
+        ],
+        "tags": [
+          "user"
+        ]
+      }
+    },
     "/api/v1/user/login": {
       "post": {
         "operationId": "login",
@@ -537,7 +563,7 @@
         ]
       }
     },
-    "/api/v1/user/update": {
+    "/api/v1/user/update_profile": {
       "put": {
         "operationId": "updateUser",
         "responses": {
@@ -732,6 +758,22 @@
       "required": [
         "promptId"
       ]
+    },
+    "ForgotPasswordnRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "ForgotPasswordnRequest",
+      "required": [
+        "email"
+      ]
+    },
+    "ForgotPasswordnResponse": {
+      "type": "object",
+      "title": "ForgotPasswordnResponse"
     },
     "GetCategoryListRequest": {
       "type": "object",
@@ -1115,11 +1157,15 @@
     "UpdatePromptRequest": {
       "type": "object",
       "properties": {
-        "promptId": {
+        "id": {
           "type": "integer",
           "format": "uint32"
         },
-        "promptName": {
+        "categoryId": {
+          "type": "integer",
+          "format": "uint32"
+        },
+        "title": {
           "type": "string"
         },
         "content": {
@@ -1128,33 +1174,25 @@
       },
       "title": "UpdatePromptRequest",
       "required": [
-        "promptId",
-        "promptName",
+        "id",
+        "categoryId",
+        "title",
         "content"
       ]
     },
     "UpdateUserRequest": {
       "type": "object",
       "properties": {
-        "user_id": {
-          "type": "integer",
-          "format": "uint32"
-        },
         "name": {
           "type": "string"
         },
         "avatar": {
           "type": "string"
-        },
-        "email": {
-          "type": "string"
         }
       },
       "title": "UpdateUserRequest",
       "required": [
-        "user_id",
-        "avatar",
-        "email"
+        "avatar"
       ]
     },
     "UserPromptsResponse": {
