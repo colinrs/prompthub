@@ -20,6 +20,7 @@ func CreateCategoryHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 		if svcCtx.DetectorSWD.Detect(req.Name + req.Color) {
 			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
+			return
 		}
 		l := category.NewCreateCategoryLogic(r.Context(), svcCtx)
 		err := l.CreateCategory(&req)

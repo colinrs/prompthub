@@ -20,6 +20,7 @@ func CreatePromptHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 		if svcCtx.DetectorSWD.Detect(req.Title + req.Content) {
 			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
+			return
 		}
 		l := prompt.NewCreatePromptLogic(r.Context(), svcCtx)
 		err := l.CreatePrompt(&req)

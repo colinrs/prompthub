@@ -20,6 +20,7 @@ func UpdateUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 		if svcCtx.DetectorSWD.Detect(req.Name) {
 			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
+			return
 		}
 		l := user.NewUpdateUserLogic(r.Context(), svcCtx)
 		err := l.UpdateUser(&req)

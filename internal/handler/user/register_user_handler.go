@@ -20,6 +20,7 @@ func RegisterUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 		if svcCtx.DetectorSWD.Detect(req.Name + req.Email) {
 			httpy.ResultCtx(r, w, nil, code.ErrSensitiveWord)
+			return
 		}
 		l := user.NewRegisterUserLogic(r.Context(), svcCtx)
 		resp, err := l.RegisterUser(&req)
