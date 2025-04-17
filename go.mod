@@ -1,6 +1,8 @@
 module github.com/colinrs/prompthub
 
-go 1.23.7
+go 1.23.4
+
+toolchain go1.23.7
 
 require (
 	github.com/alibabacloud-go/darabonba-openapi/v2 v2.1.7
