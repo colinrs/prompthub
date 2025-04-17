@@ -56,6 +56,28 @@ func (l *ForgotPasswordLogic) ForgotPasswordEvent(req *types.ForgotPasswordnRequ
 		l.Errorf("Failed to set email:%s verification code: %v", req.Email, err)
 		return
 	}
+	key = fmt.Sprintf("%s:%s", config.SingleVerificationEmailLimit, req.Email)
+	val, err := utils.IncrementAndSetTTLWithLua(
+		context.WithoutCancel(l.ctx), l.svcCtx.RedisClient, key, 86400)
+	if err != nil {
+		l.Errorf("Failed to set single verification email:%s limit: %v", req.Email, err)
+		return
+	}
+	if val > int64(l.svcCtx.Config.SingleVerificationEmailLimit) {
+		l.Errorf("Single verification email:%s limit exceeded", req.Email)
+		return code.ErrVerificationLimitExceed
+	}
+	key = fmt.Sprintf("%s:%s", config.VerificationEmailLimitKey, req.Email)
+	val, err = utils.IncrementAndSetTTLWithLua(
+		context.WithoutCancel(l.ctx), l.svcCtx.RedisClient, key, 86400)
+	if err != nil {
+		l.Errorf("Failed to set all verification email:%s limit: %v", req.Email, err)
+		return
+	}
+	if val > int64(l.svcCtx.Config.SingleVerificationEmailLimit) {
+		l.Errorf("All verification email:%s limit exceeded", req.Email)
+		return code.ErrVerificationLimitExceed
+	}
 	emailData := ForgotPasswordData{
 		VerificationCode: emailCode,
 		EffectiveTime:    fmt.Sprintf("%d mins", l.svcCtx.Config.CodeTime.PasswordResetCodeExpire/60),

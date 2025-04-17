@@ -33,5 +33,5 @@ JwtSecret: 'JwtSecret'
 JwtExpired: 86400
 WebsiteUrl: http://192.168.0.115:8082/verification
 EmailSubject: "PMPsh Email Verification"
-SingleVerificationEmailLimit: 2
-VerificationEmailLimit: 10
+SingleVerificationEmailLimit: 1
+VerificationEmailLimit: 2

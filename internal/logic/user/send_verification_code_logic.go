@@ -66,7 +66,6 @@ func (l *SendVerificationCodeLogic) SendVerificationCode(req *types.SendVerifica
 		}
 		if val > int64(l.svcCtx.Config.SingleVerificationEmailLimit) {
 			l.Errorf("Single verification email:%s limit exceeded", req.Email)
-			return
 		}
 		key = fmt.Sprintf("%s:%s", config.VerificationEmailLimitKey, req.Email)
 		val, err = utils.IncrementAndSetTTLWithLua(
@@ -86,7 +85,6 @@ func (l *SendVerificationCodeLogic) SendVerificationCode(req *types.SendVerifica
 				l.Errorf("Failed to set verification email:%s verification code: %v", req.Email, err)
 			}
 		}
-
 	}()
 	resp = &types.SendVerificationCodeResponse{}
 	return
