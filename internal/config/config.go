@@ -16,9 +16,9 @@ type Config struct {
 	JwtExpired                   int64           `json:"JwtExpired" yaml:"JwtExpired"`
 	CodeTime                     CodeTime        `json:"CodeTime" yaml:"CodeTime"`
 	WebsiteUrl                   string          `json:"WebsiteUrl" yaml:"WebsiteUrl"`
-	EmailAccessKeyId             string          `json:",env=EMAIL_ACCESS_KEY_ID"`
-	EmailAccessSecret            string          `json:",env=EMAIL_ACCESS_SECRET"`
-	EmailAccountName             string          `json:",env=EMAIL_ACCOUNT_NAME"`
+	EmailAccessKeyId             string          `json:"EmailAccessKeyId" yaml:"EmailAccessKeyId"`
+	EmailAccessSecret            string          `json:"EmailAccessSecret" yaml:"EmailAccessSecret"`
+	EmailAccountName             string          `json:"EmailAccountName" yaml:"EmailAccountName"`
 	EmailSubject                 string          `json:"EmailSubject" yaml:"EmailSubject"`
 	VerificationEmailLimit       int             `json:"VerificationEmailLimit" yaml:"VerificationEmailLimit"`
 	SingleVerificationEmailLimit int             `json:"SingleVerificationEmailLimit" yaml:"SingleVerificationEmailLimit"`

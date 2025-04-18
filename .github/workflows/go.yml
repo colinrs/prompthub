@@ -14,13 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        env:
-          ALIYUNCS_REGISTRY_PASSSWD: ${{ secrets.ALIYUNCSREGISTRYPASSSWD }}
-        run: |
-          echo "$ALIYUNCS_REGISTRY_PASSSWD"
       - uses: actions/checkout@v4
-
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -28,5 +22,6 @@ jobs:
 
       - name: Build
         env:
-          ALIYUNCS_REGISTRY_PASSSWD: ${{ secrets.ALIYUNCSREGISTRYPASSSWD }}
+          ALIYUNCS_REGISTRY_PASSWD: ${{ secrets.ALIYUNCS_REGISTRY_PASSWD }}
+          ALIYUNCS_REGISTRY_USER: ${{ secrets.ALIYUNCS_REGISTRY_USER }}
         run: pwd && ls && ./build.sh 0.0.1

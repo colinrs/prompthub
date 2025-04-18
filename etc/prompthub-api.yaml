@@ -35,3 +35,6 @@ WebsiteUrl: http://192.168.0.115:8082/verification
 EmailSubject: "PMPsh Email Verification"
 SingleVerificationEmailLimit: 1
 VerificationEmailLimit: 2
+EmailAccessKeyId: EmailAccessKeyId
+EmailAccessSecret: EmailAccessSecret
+EmailAccountName: EmailAccountName
