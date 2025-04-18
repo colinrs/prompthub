@@ -14,12 +14,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - shell: bash
+        env:
+          ALIYUNCS_REGISTRY_PASSSWD: ${{ secrets.ALIYUNCSREGISTRYPASSSWD }}
+        run: |
+          echo "$ALIYUNCS_REGISTRY_PASSSWD"
+      - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.24'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
 
-    - name: Build
-      run: pwd && ls && ./build.sh 0.0.1
+      - name: Build
+        run: pwd && ls && ./build.sh 0.0.1
