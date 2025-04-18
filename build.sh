@@ -14,7 +14,7 @@ NAMESPACE="feitiansh"
 REPO="prompthub"
 IMAGE_NAME="${REGISTRY}/${NAMESPACE}/${REPO}:${TAG}"
 
-echo "$ALIYUNCS_REGISTRY_PASSSWD"
+echo "aaaa $ALIYUNCS_REGISTRY_PASSSWD"
 # 登录到阿里云容器镜像服务
 echo "登录到阿里云容器镜像服务..."
 docker login --username=947834020@qq.com --password=uuv5fw7uy2j5kw769b2d3cff ${REGISTRY} || {
