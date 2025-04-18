@@ -6,6 +6,8 @@ GOCTL := goctl
 # 设置go模块环境变量
 export GO111MODULE := on
 
+install-tools: ## Install go build tools
+	@./scripts/install-tools.sh
 
 # 格式化API定义文件
 format:

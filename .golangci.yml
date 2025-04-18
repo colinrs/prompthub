@@ -1,0 +1,75 @@
+# details in https://golangci-lint.run/usage/configuration/
+run:
+  timeout: 20m
+  new-from-rev: develop
+
+output:
+  sort-results: true
+  formats: colored-line-number
+  print-issued-lines: true
+  print-config: true
+
+linters-settings:
+  govet:
+    disable-all: true
+    enable:
+      - shadow   # Check for possible unintended shadowing of variables.
+      - unreachable # Check for unreachable code.
+      - copylocks # Check for locks erroneously passed by value.
+      - atomic    # Check for common mistakes using the sync/atomic package.
+      - cgocall   # Detect some violations of the cgo pointer passing rules.
+      - defers    # Report common mistakes in defer statements.
+      - nilness   # Check for redundant or impossible nil comparisons.
+      - shift     # Check for shifts that equal or exceed the width of the integer.
+      - unmarshal #Report passing non-pointer or non-interface values to unmarshal.
+      -
+  gocyclo:
+    # Minimal code complexity to report.
+    # Default: 30 (but we recommend 10-20)
+    # 先放过
+    min-complexity: 100
+  nestif:
+    # Minimal complexity of if statements to report.
+    # Default: 5
+    min-complexity: 10
+#  lll:
+#    line-length: 160
+
+linters:
+  disable-all: true
+  enable:
+    - makezero      # Finds composite literals that could be simplified to use the zero value
+    - gocyclo       # Computes and checks the cyclomatic complexity of functions.
+    - goconst       # Finds repeated strings that could be replaced by a constant
+    - gofmt         # Gofmt checks whether code was gofmt-ed. By default this tool runs with -s option to check for code simplification
+    #    - lll           # Lll finds long lines. It's a linter that checks line length in Go source files
+    - nestif        # Finds deeply nested if statements
+    #
+    - errcheck      # Errcheck is a program for checking for unchecked errors in go programs. These unchecked errors can be critical bugs in some cases
+    - gosimple      # Linter for Go source code that specializes in simplifying a code
+    - govet         # Vet examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string
+    - ineffassign   # Detects when assignments to existing variables are not used
+    - staticcheck   # Staticcheck is a go vet on steroids, applying a ton of static analysis checks
+    - typecheck     # Like the front-end of a Go compiler, parses and type-checks Go code
+    - unused        # Checks Go code for unused constants, variables, functions and types
+    - copyloopvar    # 	Copyloopvar is a linter detects places where loop variables are copied.
+
+issues:
+  exclude-dirs:
+    - build
+    - i18n
+    - proto
+    - protocol
+    - scripts
+  exclude-files:
+    - ".*\\.pb\\.go"
+    - ".*\\.gen\\.go"
+    - ".*_test\\.go"
+    - "gen_data\\.go"
+  exclude-rules:
+    - linters:
+        - govet
+      text: "shadow: declaration of \"err\" shadows declaration at"
+    - linters:
+        - staticcheck
+      text: "SA5008:"
