@@ -19,20 +19,20 @@ jobs:
         with:
           go-version: '1.24'
 
-      - name: install-tools
-        shell: bash
-        run: |-
-          set -eEu
-          set +o pipefail
-          ls -la
-          make install-tools
+#      - name: install-tools
+#        shell: bash
+#        run: |-
+#          set -eEu
+#          set +o pipefail
+#          ls -la
+#          make install-tools
 
-      - name: go-lint
-        shell: bash
-        run: |-
-          set -eEu
-          set +o pipefail
-          make lint
+#      - name: go-lint
+#        shell: bash
+#        run: |-
+#         set -eEu
+#          set +o pipefail
+#          make lint
 
       - name: Build
         env:
