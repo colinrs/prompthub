@@ -17,7 +17,7 @@ IMAGE_NAME="${REGISTRY}/${NAMESPACE}/${REPO}:${TAG}"
 echo "aaaa $ALIYUNCS_REGISTRY_PASSSWD"
 # 登录到阿里云容器镜像服务
 echo "登录到阿里云容器镜像服务..."
-docker login --username=947834020@qq.com --password=uuv5fw7uy2j5kw769b2d3cff ${REGISTRY} || {
+docker login --username=947834020@qq.com --password=$ALIYUNCS_REGISTRY_PASSSWD ${REGISTRY} || {
     echo "错误: 登录失败"
     exit 1
 }
