@@ -480,6 +480,14 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "tags": [
           "user"
         ]
@@ -676,17 +684,17 @@
     "ChangePasswordRequest": {
       "type": "object",
       "properties": {
-        "old_password": {
+        "oldPassword": {
           "type": "string"
         },
-        "new_password": {
+        "newPassword": {
           "type": "string"
         }
       },
       "title": "ChangePasswordRequest",
       "required": [
-        "old_password",
-        "new_password"
+        "oldPassword",
+        "newPassword"
       ]
     },
     "CreateCategoryRequest": {
@@ -891,7 +899,7 @@
     "LoginResponse": {
       "type": "object",
       "properties": {
-        "user_id": {
+        "userId": {
           "type": "integer",
           "format": "uint32"
         },
@@ -907,19 +915,19 @@
         "token": {
           "type": "string"
         },
-        "expire_at": {
+        "expireAt": {
           "type": "integer",
           "format": "int64"
         }
       },
       "title": "LoginResponse",
       "required": [
-        "user_id",
+        "userId",
         "name",
         "email",
         "avatar",
         "token",
-        "expire_at"
+        "expireAt"
       ]
     },
     "Prompt": {
@@ -983,13 +991,25 @@
         "saved"
       ]
     },
+    "RefreshTokenRequeste": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "RefreshTokenRequeste",
+      "required": [
+        "token"
+      ]
+    },
     "RefreshTokenResponse": {
       "type": "object",
       "properties": {
         "token": {
           "type": "string"
         },
-        "expire_at": {
+        "expireAt": {
           "type": "integer",
           "format": "int64"
         }
@@ -997,7 +1017,7 @@
       "title": "RefreshTokenResponse",
       "required": [
         "token",
-        "expire_at"
+        "expireAt"
       ]
     },
     "RegisterUserRequest": {

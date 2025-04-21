@@ -15,8 +15,8 @@ type CategoryResponse struct {
 }
 
 type ChangePasswordRequest struct {
-	OldPassword string `json:"old_password" validate:"required,max=30"`
-	NewPassword string `json:"new_password" validate:"required,max=30"`
+	OldPassword string `json:"oldPassword" validate:"required,max=30"`
+	NewPassword string `json:"newPassword" validate:"required,max=30"`
 }
 
 type CreateCategoryRequest struct {
@@ -82,12 +82,12 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	UserId    uint   `json:"user_id"`
+	UserId    uint   `json:"userId"`
 	Name      string `json:"name"`
 	Email     string `json:"email"`
 	Avatar    string `json:"avatar"`
 	Token     string `json:"token"`
-	ExpiredAt int64  `json:"expire_at"`
+	ExpiredAt int64  `json:"expireAt"`
 }
 
 type Prompt struct {
@@ -105,9 +105,13 @@ type Prompt struct {
 	Saved         bool      `json:"saved"`
 }
 
+type RefreshTokenRequeste struct {
+	Token string `json:"token"`
+}
+
 type RefreshTokenResponse struct {
 	Token     string `json:"token"`
-	ExpiredAt int64  `json:"expire_at"`
+	ExpiredAt int64  `json:"expireAt"`
 }
 
 type RegisterUserRequest struct {
