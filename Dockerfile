@@ -26,7 +26,7 @@ RUN go build -o prompthub .
 FROM alpine:latest
 
 # 安装基础工具和SSL证书
-RUN apk --no-cache add ca-certificates tzdata
+RUN apk --no-cache add ca-certificates tzdata && apk add curl && apk add busybox-extras
 
 # 设置工作目录
 WORKDIR /app

@@ -96,6 +96,9 @@ func (l *SendVerificationCodeLogic) checkEmailLimit(email string) (bool, error) 
 	if err != nil {
 		return false, err
 	}
+	if limitString == "" {
+		limitString = "0"
+	}
 	limit, err := cast.ToIntE(limitString)
 	if err != nil {
 		return false, err
@@ -107,6 +110,9 @@ func (l *SendVerificationCodeLogic) checkEmailLimit(email string) (bool, error) 
 	limitString, err = l.svcCtx.RedisClient.GetCtx(l.ctx, config.VerificationEmailLimitKey)
 	if err != nil {
 		return false, err
+	}
+	if limitString == "" {
+		limitString = "0"
 	}
 	limit, err = cast.ToIntE(limitString)
 	if err != nil {
