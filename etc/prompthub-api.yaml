@@ -6,7 +6,12 @@ Log:
   Mode: console
   Encoding: plain
   Level: debug
-  Status: false
+  Stat: false
+  Path: /data/logs/prompthub-api.log
+  KeepDays: 7
+  MaxBackups: 10
+  Rotation: daily
+
 
 DevServer:
   Enabled: true
