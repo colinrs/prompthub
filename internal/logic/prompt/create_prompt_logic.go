@@ -3,6 +3,7 @@ package prompt
 import (
 	"context"
 	"errors"
+
 	"github.com/colinrs/prompthub/gen"
 	"github.com/colinrs/prompthub/internal/config"
 	"github.com/colinrs/prompthub/internal/svc"
@@ -45,7 +46,7 @@ func (l *CreatePromptLogic) CreatePrompt(req *types.CreatePromptRequest) error {
 	prompts := &model.PromptsTable{
 		ID:            0,
 		Title:         req.Title,
-		Content:       req.Title,
+		Content:       req.Content,
 		Category:      int32(req.CategoryId),
 		PromptsStatus: config.PromptsStatusNormal,
 		CreatedBy:     int32(userID),
